@@ -5,6 +5,7 @@ import android.support.v4.view.ActionProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.baozou.rxjavaexample.R;
 
@@ -21,6 +22,9 @@ public class MenuProviderMain extends ActionProvider {
 
     private View.OnClickListener listener;
 
+    @Bind(R.id.location_txt)
+    TextView locationTxt;
+
     public MenuProviderMain(Context context) {
         super(context);
         ctx = context;
@@ -31,6 +35,10 @@ public class MenuProviderMain extends ActionProvider {
         View view = LayoutInflater.from(ctx).inflate(R.layout.actionbar_main, null);
         ButterKnife.bind(this, view);
         return view;
+    }
+
+    public TextView getTextView() {
+        return locationTxt;
     }
 
     public void setOnClickLister(View.OnClickListener listener) {

@@ -1,18 +1,19 @@
 package com.baozou.rxjavaexample.activity;
 
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.baozou.rxjavaexample.R;
 import com.baozou.rxjavaexample.common.Constants;
 import com.baozou.rxjavaexample.model.DocumentListBean;
@@ -44,12 +45,18 @@ public class MainActivity extends AppCompatActivity {
     Toolbar mToolBar;
 
     private MenuProviderMain menuProvider;
+    private TextView locationTxt;
+
+    public LocationClient mLocationClient = null;
+    public BDLocationListener myListener = new MyLocationListener();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        initLocation();
         initRetrofit();
         setupActionBar();
     }
@@ -130,11 +137,36 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     if (v.getId() == R.id.location_img) {
-                        Toast.makeText(MainActivity.this, "location", Toast.LENGTH_SHORT).show();
+                        mLocationClient.start();
                     }
                 }
             });
         }
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private void initLocation() {
+        mLocationClient = new LocationClient(getApplicationContext());     //声明LocationClient类
+        mLocationClient.registerLocationListener(myListener);    //注册监听函数
+
+        LocationClientOption option = new LocationClientOption();
+        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);// 设置定位模式
+        option.setCoorType("bd09ll");// 返回的定位结果是百度经纬度，默认值gcj02
+        int span = 5000;
+        option.setScanSpan(span);// 设置发起定位请求的间隔时间为5000ms
+        option.setIsNeedAddress(true);
+        mLocationClient.setLocOption(option);
+
+    }
+
+    public class MyLocationListener implements BDLocationListener {
+
+        @Override
+        public void onReceiveLocation(BDLocation location) {
+            if (menuProvider != null && location != null) {
+                Log.i("address", "" + location.getProvince() + " " + location.getCity());
+                menuProvider.getTextView().setText(location.getCity());
+            }
+        }
     }
 }
