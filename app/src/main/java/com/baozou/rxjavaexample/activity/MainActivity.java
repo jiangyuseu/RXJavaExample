@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
     Toolbar mToolBar;
 
     private MenuProviderMain menuProvider;
-    private TextView locationTxt;
 
     public LocationClient mLocationClient = null;
     public BDLocationListener myListener = new MyLocationListener();
@@ -61,6 +60,13 @@ public class MainActivity extends AppCompatActivity {
         setupActionBar();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(mLocationClient.isStarted()){
+            mLocationClient.stop();
+        }
+    }
 
     private void initRetrofit() {
         retrofit = new Retrofit.Builder()
@@ -152,6 +158,7 @@ public class MainActivity extends AppCompatActivity {
         LocationClientOption option = new LocationClientOption();
         option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);// 设置定位模式
         option.setCoorType("bd09ll");// 返回的定位结果是百度经纬度，默认值gcj02
+        option.setAddrType("all");
         int span = 5000;
         option.setScanSpan(span);// 设置发起定位请求的间隔时间为5000ms
         option.setIsNeedAddress(true);
@@ -163,9 +170,14 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onReceiveLocation(BDLocation location) {
-            if (menuProvider != null && location != null) {
+            if (menuProvider != null) {
+                if(location==null){
+                    menuProvider.getTextView().setText("正在定位");
+                }else{
+                    menuProvider.getTextView().setText(location.getCity());
+                    mLocationClient.stop();
+                }
                 Log.i("address", "" + location.getProvince() + " " + location.getCity());
-                menuProvider.getTextView().setText(location.getCity());
             }
         }
     }

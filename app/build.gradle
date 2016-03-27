@@ -4,6 +4,8 @@ android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
 
+    sourceSets.main.jniLibs.srcDirs = ['libs']
+
     defaultConfig {
         applicationId "com.baozou.rxjavaexample"
         minSdkVersion 15
@@ -17,6 +19,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
 }
 
 dependencies {
