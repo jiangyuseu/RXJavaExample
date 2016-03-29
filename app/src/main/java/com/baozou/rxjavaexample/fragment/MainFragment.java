@@ -18,7 +18,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
@@ -26,9 +29,13 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baozou.rxjavaexample.R;
+import com.baozou.rxjavaexample.adapter.MainListViewAdapter;
 import com.baozou.rxjavaexample.base.BaseActivity;
 import com.baozou.rxjavaexample.base.BaseFragment;
 import com.baozou.rxjavaexample.model.ADInfo;
+import com.baozou.rxjavaexample.model.CourseBean;
+import com.baozou.rxjavaexample.model.CoursesBean;
+import com.baozou.rxjavaexample.service.GetMainDataApi;
 import com.baozou.rxjavaexample.view.MenuProviderMain;
 import com.baozou.rxjavaexample.view.adview.CycleViewPager;
 import com.baozou.rxjavaexample.view.adview.ViewFactory;
@@ -43,9 +50,13 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by jiangyu on 2016/3/28.
+ * 首页
  */
 public class MainFragment extends BaseFragment {
 
@@ -63,12 +74,20 @@ public class MainFragment extends BaseFragment {
             "http://pic15.nipic.com/20110722/2912365_092519919000_2.jpg",
             "http://pic.58pic.com/58pic/12/64/27/55U58PICrdX.jpg"};
 
+    //数据容器
+    private CoursesBean coursesBean = new CoursesBean();
+
     //下拉刷新view
     @Bind(R.id.swipe_container)
     SwipeRefreshLayout swipeLayout;
 
     @Bind(R.id.toolbar)
     Toolbar mToolBar;
+
+    @Bind(R.id.main_listview)
+    ListView mListView;
+
+    private MainListViewAdapter mAdapter;
 
     private MenuProviderMain menuProvider;
 
@@ -80,6 +99,7 @@ public class MainFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater,container,savedInstanceState);
         if (rootView == null) {
             act = getActivity();
             rootView = inflater.inflate(R.layout.fragment_main, container, false);
@@ -96,12 +116,35 @@ public class MainFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         configImageLoader();
-        initAds();
+        initView();
         initPtrViews();
         initLocation();
         setupActionBar();
         // 若不设置，onCreateOptionsMenu方法不会回调
         setHasOptionsMenu(true);
+        getMainData();
+    }
+
+    private void initView(){
+        mAdapter = new MainListViewAdapter(act);
+        mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) { // 判断滚动到底部
+                    if (view.getLastVisiblePosition() == (view.getCount() - 1)) {
+
+                    }
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+            }
+        });
+        this.mListView.setAdapter(mAdapter);
     }
 
     @Override
@@ -146,26 +189,20 @@ public class MainFragment extends BaseFragment {
         cycleViewPager = (CycleViewPager) getActivity().getFragmentManager()
                 .findFragmentById(R.id.ad_view_fragment);
 
-        for (int i = 0; i < imageUrls.length; i++) {
-            ADInfo info = new ADInfo();
-            info.setUrl(imageUrls[i]);
-            info.setContent("图片-->" + i);
-            infos.add(info);
-        }
-
         // 将最后一个ImageView添加进来
-        views.add(ViewFactory.getImageView(act, infos.get(infos.size() - 1).getUrl()));
-        for (int i = 0; i < infos.size(); i++) {
-            views.add(ViewFactory.getImageView(act, infos.get(i).getUrl()));
+        views.add(ViewFactory.getImageView(act, coursesBean.getTop_courses().get(coursesBean.getTop_courses().size() - 1).getImage()));
+
+        for (int i = 0; i < coursesBean.getTop_courses().size(); i++) {
+            views.add(ViewFactory.getImageView(act, coursesBean.getTop_courses().get(i).getImage()));
         }
         // 将第一个ImageView添加进来
-        views.add(ViewFactory.getImageView(act, infos.get(0).getUrl()));
+        views.add(ViewFactory.getImageView(act, coursesBean.getTop_courses().get(0).getImage()));
 
         // 设置循环，在调用setData方法前调用
         cycleViewPager.setCycle(true);
 
         // 在加载数据前设置是否循环
-        cycleViewPager.setData(views, infos, mAdCycleViewListener);
+        cycleViewPager.setData(views, coursesBean.getTop_courses(), mAdCycleViewListener);
         //设置轮播
         cycleViewPager.setWheel(true);
 
@@ -178,11 +215,11 @@ public class MainFragment extends BaseFragment {
     private CycleViewPager.ImageCycleViewListener mAdCycleViewListener = new CycleViewPager.ImageCycleViewListener() {
 
         @Override
-        public void onImageClick(ADInfo info, int position, View imageView) {
+        public void onImageClick(CourseBean info, int position, View imageView) {
             if (cycleViewPager.isCycle()) {
                 position = position - 1;
                 Toast.makeText(act,
-                        "position-->" + info.getContent(), Toast.LENGTH_SHORT)
+                        "position-->" + info.getDescription(), Toast.LENGTH_SHORT)
                         .show();
             }
 
@@ -253,5 +290,33 @@ public class MainFragment extends BaseFragment {
                 Log.i("address", "" + location.getProvince() + " " + location.getCity());
             }
         }
+    }
+
+    private void getMainData(){
+        GetMainDataApi service = retrofit.create(GetMainDataApi.class);
+        service.getMainData()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<CoursesBean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(CoursesBean bean) {
+                        coursesBean.setData(bean.getData());
+                        coursesBean.setTimestamp(bean.getTimestamp());
+                        coursesBean.setTop_courses(bean.getTop_courses());
+                        initAds();
+                        Log.i("coursesbean",coursesBean.getData().get(0).getDescription());
+                    }
+                });
     }
 }

@@ -27,8 +27,6 @@ import retrofit.RxJavaCallAdapterFactory;
  */
 public class MainActivity extends BaseActivity {
 
-    private Retrofit retrofit;
-
     /* 当前Tag值 */
     private String mContentTag = "";
 
@@ -65,7 +63,6 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initView();
-        initRetrofit();
         //执行首页跳转
         if (savedInstanceState == null) {
             FragmentTransaction tr = getSupportFragmentManager().beginTransaction();
@@ -79,14 +76,6 @@ public class MainActivity extends BaseActivity {
         iconMain.setImageResource(R.mipmap.icon_main_pre);
         textMain.setTextColor(getResources().getColor(R.color.main_text_pre));
         mainPage.getBackground().setAlpha(220);
-    }
-
-    private void initRetrofit() {
-        retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.baseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())  // retrofit <--> rxjava
-                .build();
     }
 
     private synchronized void switchContent(Fragment fragment, String tag) {
