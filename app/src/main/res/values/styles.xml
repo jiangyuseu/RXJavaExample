@@ -8,6 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="AppBaseTheme" parent="Theme.AppCompat.NoActionBar" />
+    <style name="AppBaseTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="bigImageMask">@drawable/mask_dark</item>
+    </style>
 
 </resources>

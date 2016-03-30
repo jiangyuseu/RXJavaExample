@@ -1,6 +1,5 @@
 package com.baozou.rxjavaexample.fragment;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -19,10 +18,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -32,21 +28,15 @@ import com.baozou.rxjavaexample.R;
 import com.baozou.rxjavaexample.adapter.MainListViewAdapter;
 import com.baozou.rxjavaexample.base.BaseActivity;
 import com.baozou.rxjavaexample.base.BaseFragment;
-import com.baozou.rxjavaexample.model.ADInfo;
-import com.baozou.rxjavaexample.model.CourseBean;
 import com.baozou.rxjavaexample.model.CoursesBean;
 import com.baozou.rxjavaexample.service.GetMainDataApi;
 import com.baozou.rxjavaexample.view.MenuProviderMain;
-import com.baozou.rxjavaexample.view.adview.CycleViewPager;
-import com.baozou.rxjavaexample.view.adview.ViewFactory;
+import com.baozou.rxjavaexample.view.topcourses.MainTopHeaderView;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -64,16 +54,6 @@ public class MainFragment extends BaseFragment {
     private View rootView;
     private Activity act;
 
-    //首页轮播图相关
-    private List<ImageView> views = new ArrayList<>();
-    private List<ADInfo> infos = new ArrayList<>();
-    private CycleViewPager cycleViewPager;
-    private String[] imageUrls = {"http://img.taodiantong.cn/v55183/infoimg/2013-07/130720115322ky.jpg",
-            "http://pic30.nipic.com/20130626/8174275_085522448172_2.jpg",
-            "http://pic18.nipic.com/20111215/577405_080531548148_2.jpg",
-            "http://pic15.nipic.com/20110722/2912365_092519919000_2.jpg",
-            "http://pic.58pic.com/58pic/12/64/27/55U58PICrdX.jpg"};
-
     //数据容器
     private CoursesBean coursesBean = new CoursesBean();
 
@@ -84,14 +64,16 @@ public class MainFragment extends BaseFragment {
     @Bind(R.id.toolbar)
     Toolbar mToolBar;
 
-    @Bind(R.id.main_listview)
-    ListView mListView;
-
-    private MainListViewAdapter mAdapter;
-
     private MenuProviderMain menuProvider;
 
-    //百度地图定位相关
+    @Bind(R.id.main_listview)
+    ListView mListView;
+    private MainListViewAdapter mAdapter;
+
+    // 头图
+    private MainTopHeaderView mHeader;
+
+    // 百度地图定位相关
     public LocationClient mLocationClient = null;
     public BDLocationListener myListener = new MyLocationListener();
 
@@ -99,7 +81,7 @@ public class MainFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        super.onCreateView(inflater,container,savedInstanceState);
+        super.onCreateView(inflater, container, savedInstanceState);
         if (rootView == null) {
             act = getActivity();
             rootView = inflater.inflate(R.layout.fragment_main, container, false);
@@ -115,7 +97,6 @@ public class MainFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        configImageLoader();
         initView();
         initPtrViews();
         initLocation();
@@ -125,8 +106,9 @@ public class MainFragment extends BaseFragment {
         getMainData();
     }
 
-    private void initView(){
-        mAdapter = new MainListViewAdapter(act);
+    private void initView() {
+        mHeader = new MainTopHeaderView(act, coursesBean.getTop_courses());
+        mAdapter = new MainListViewAdapter(act, coursesBean.getData());
         mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
 
             @Override
@@ -144,17 +126,9 @@ public class MainFragment extends BaseFragment {
 
             }
         });
+        this.mListView.addHeaderView(mHeader.getHeaderView());
+        mHeader.sendHanderMessage();
         this.mListView.setAdapter(mAdapter);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        FragmentManager fm = getActivity().getFragmentManager();
-        Fragment fragment = (fm.findFragmentById(R.id.ad_view_fragment));
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.remove(fragment);
-        ft.commit();
     }
 
     @Override
@@ -163,68 +137,8 @@ public class MainFragment extends BaseFragment {
         if (mLocationClient.isStarted()) {
             mLocationClient.stop();
         }
+        mHeader.removeHandlerMessage();
     }
-
-    /**
-     * 配置ImageLoder
-     */
-    private void configImageLoader() {
-        DisplayImageOptions options = new DisplayImageOptions.Builder().showStubImage(R.mipmap.icon_stub) // 设置图片下载期间显示的图片
-                .showImageForEmptyUri(R.mipmap.icon_empty) // 设置图片Uri为空或是错误的时候显示的图片
-                .showImageOnFail(R.mipmap.icon_error) // 设置图片加载或解码过程中发生错误显示的图片
-                .cacheInMemory(true) // 设置下载的图片是否缓存在内存中
-                .cacheOnDisc(true) // 设置下载的图片是否缓存在SD卡中
-                        // .displayer(new RoundedBitmapDisplayer(20)) // 设置成圆角图片
-                .build(); // 创建配置过得DisplayImageOption对象
-
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getActivity().getApplicationContext()).defaultDisplayImageOptions(options)
-                .threadPriority(Thread.NORM_PRIORITY - 2).denyCacheImageMultipleSizesInMemory()
-                .discCacheFileNameGenerator(new Md5FileNameGenerator()).tasksProcessingOrder(QueueProcessingType.LIFO).build();
-        ImageLoader.getInstance().init(config);
-    }
-
-    @SuppressLint("NewApi")
-    private void initAds() {
-
-        cycleViewPager = (CycleViewPager) getActivity().getFragmentManager()
-                .findFragmentById(R.id.ad_view_fragment);
-
-        // 将最后一个ImageView添加进来
-        views.add(ViewFactory.getImageView(act, coursesBean.getTop_courses().get(coursesBean.getTop_courses().size() - 1).getImage()));
-
-        for (int i = 0; i < coursesBean.getTop_courses().size(); i++) {
-            views.add(ViewFactory.getImageView(act, coursesBean.getTop_courses().get(i).getImage()));
-        }
-        // 将第一个ImageView添加进来
-        views.add(ViewFactory.getImageView(act, coursesBean.getTop_courses().get(0).getImage()));
-
-        // 设置循环，在调用setData方法前调用
-        cycleViewPager.setCycle(true);
-
-        // 在加载数据前设置是否循环
-        cycleViewPager.setData(views, coursesBean.getTop_courses(), mAdCycleViewListener);
-        //设置轮播
-        cycleViewPager.setWheel(true);
-
-        // 设置轮播时间，默认5000ms
-        cycleViewPager.setTime(2000);
-        //设置圆点指示图标组居中显示，默认靠右
-        cycleViewPager.setIndicatorCenter();
-    }
-
-    private CycleViewPager.ImageCycleViewListener mAdCycleViewListener = new CycleViewPager.ImageCycleViewListener() {
-
-        @Override
-        public void onImageClick(CourseBean info, int position, View imageView) {
-            if (cycleViewPager.isCycle()) {
-                position = position - 1;
-                Toast.makeText(act,
-                        "position-->" + info.getDescription(), Toast.LENGTH_SHORT)
-                        .show();
-            }
-
-        }
-    };
 
     private void initPtrViews() {
         swipeLayout.setColorSchemeResources(R.color.main_style_color);
@@ -263,8 +177,8 @@ public class MainFragment extends BaseFragment {
     }
 
     private void initLocation() {
-        mLocationClient = new LocationClient(act.getApplicationContext());     //声明LocationClient类
-        mLocationClient.registerLocationListener(myListener);    //注册监听函数
+        mLocationClient = new LocationClient(act.getApplicationContext());
+        mLocationClient.registerLocationListener(myListener);
         LocationClientOption option = new LocationClientOption();
         option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);// 设置定位模式
         option.setCoorType("bd09ll");// 返回的定位结果是百度经纬度，默认值gcj02
@@ -292,7 +206,7 @@ public class MainFragment extends BaseFragment {
         }
     }
 
-    private void getMainData(){
+    private void getMainData() {
         GetMainDataApi service = retrofit.create(GetMainDataApi.class);
         service.getMainData()
                 .subscribeOn(Schedulers.io())
@@ -314,8 +228,10 @@ public class MainFragment extends BaseFragment {
                         coursesBean.setData(bean.getData());
                         coursesBean.setTimestamp(bean.getTimestamp());
                         coursesBean.setTop_courses(bean.getTop_courses());
-                        initAds();
-                        Log.i("coursesbean",coursesBean.getData().get(0).getDescription());
+                        // 刷新头图
+                        mHeader.headerSetData(bean.getTop_courses());
+
+                        Log.i("coursesbean", coursesBean.getData().get(0).getDescription());
                     }
                 });
     }

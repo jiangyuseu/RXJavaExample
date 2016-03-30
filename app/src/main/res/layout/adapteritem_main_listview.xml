@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_item_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/content_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:clickable="true"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/main_item_image"
+            android:layout_width="88dp"
+            android:layout_height="88dp"
+            android:layout_margin="16dp"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:id="@+id/main_item_user_img"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignTop="@id/main_item_image"
+            android:layout_toRightOf="@id/main_item_image"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/main_item_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/main_item_image"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/main_item_user_img"
+            android:text="张三"
+            android:textColor="#8A000000"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/main_item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/main_item_user_name"
+            android:layout_marginTop="15dp"
+            android:layout_toRightOf="@id/main_item_image"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="哈利积分等级积分等级分基地级积分等级分基地"
+            android:textColor="#000000"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/main_item_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/main_item_title"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/main_item_image"
+            android:text="考研数学"
+            android:textColor="#8A000000"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/main_item_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/main_item_title"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/main_item_tag"
+            android:text="|200人"
+            android:textColor="#8A000000"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/shadow_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/content_view"
+        android:background="#FFEEEEEE"
+        android:scaleType="fitXY"
+        android:src="@drawable/material_shadow"/>
+
+    <View
+        android:id="@+id/main_item_line_view"
+        android:layout_width="match_parent"
+        android:layout_height="6.5dp"
+        android:layout_below="@+id/shadow_view"
+        android:background="#FFEEEEEE"/>
+
+
+</RelativeLayout>
