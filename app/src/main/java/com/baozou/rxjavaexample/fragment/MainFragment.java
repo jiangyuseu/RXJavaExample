@@ -77,6 +77,10 @@ public class MainFragment extends BaseFragment {
     public LocationClient mLocationClient = null;
     public BDLocationListener myListener = new MyLocationListener();
 
+    //请求相关
+    private String location;
+    private long mTimestamp;
+
 
     @Nullable
     @Override
@@ -103,7 +107,7 @@ public class MainFragment extends BaseFragment {
         setupActionBar();
         // 若不设置，onCreateOptionsMenu方法不会回调
         setHasOptionsMenu(true);
-        getMainData();
+        getMainData(0);
     }
 
     private void initView() {
@@ -206,9 +210,9 @@ public class MainFragment extends BaseFragment {
         }
     }
 
-    private void getMainData() {
+    private void getMainData(long timestamp) {
         GetMainDataApi service = retrofit.create(GetMainDataApi.class);
-        service.getMainData()
+        service.getMainData("南京市",timestamp)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
@@ -230,8 +234,7 @@ public class MainFragment extends BaseFragment {
                         coursesBean.setTop_courses(bean.getTop_courses());
                         // 刷新头图
                         mHeader.headerSetData(bean.getTop_courses());
-
-                        Log.i("coursesbean", coursesBean.getData().get(0).getDescription());
+                        mTimestamp = bean.getTimestamp();
                     }
                 });
     }

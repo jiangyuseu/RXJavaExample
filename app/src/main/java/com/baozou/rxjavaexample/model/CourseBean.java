@@ -5,22 +5,25 @@ package com.baozou.rxjavaexample.model;
  * 标准的课程bean
  */
 public class CourseBean {
-    private String _id = "";
-    private String name = "";
-    private String title = "";
-    private String image = "";
-    private String thumbnail = "";
-    private String description = "";
-    private String location = "";
-    private int totalnumber = 0;
-    private int signnumber = 0;
 
-    public String get_id() {
-        return _id;
+    private int cid;
+    private String name;
+    private String title;
+    private String location;
+    private TeacherBean teacher;
+    private String image;
+    private String thumbnail;
+    private int sign;
+    private int total;
+    private double price;
+    private String address;
+
+    public int getCid() {
+        return cid;
     }
 
-    public void set_id(String _id) {
-        this._id = _id;
+    public void setCid(int cid) {
+        this.cid = cid;
     }
 
     public String getName() {
@@ -39,6 +42,22 @@ public class CourseBean {
         this.title = title;
     }
 
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public TeacherBean getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(TeacherBean teacher) {
+        this.teacher = teacher;
+    }
+
     public String getImage() {
         return image;
     }
@@ -55,35 +74,35 @@ public class CourseBean {
         this.thumbnail = thumbnail;
     }
 
-    public String getDescription() {
-        return description;
+    public int getSign() {
+        return sign;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setSign(int sign) {
+        this.sign = sign;
     }
 
-    public String getLocation() {
-        return location;
+    public int getTotal() {
+        return total;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setTotal(int total) {
+        this.total = total;
     }
 
-    public int getTotalnumber() {
-        return totalnumber;
+    public double getPrice() {
+        return price;
     }
 
-    public void setTotalnumber(int totalnumber) {
-        this.totalnumber = totalnumber;
+    public void setPrice(double price) {
+        this.price = price;
     }
 
-    public int getSignnumber() {
-        return signnumber;
+    public String getAddress() {
+        return address;
     }
 
-    public void setSignnumber(int signnumber) {
-        this.signnumber = signnumber;
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

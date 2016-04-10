@@ -10,6 +10,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.baozou.rxjavaexample.R;
 import com.baozou.rxjavaexample.model.CourseBean;
+import com.nostra13.universalimageloader.core.ImageLoader;
+
 import java.util.List;
 
 /**
@@ -62,6 +64,12 @@ public class MainListViewAdapter extends BaseAdapter {
         }
 
         CourseBean mBean = bean.get(i);
+        ImageLoader.getInstance().displayImage(mBean.getImage(),holder.itemImg);
+        ImageLoader.getInstance().displayImage(mBean.getTeacher().getAvatar(),holder.userImg);
+        holder.userName.setText(mBean.getTeacher().getName());
+        holder.itemTitle.setText(mBean.getTitle());
+        holder.itemCourse.setText(mBean.getName());
+        holder.itemNumber.setText(mBean.getTotal());
 
         return view;
     }

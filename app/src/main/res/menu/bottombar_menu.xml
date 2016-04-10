@@ -15,6 +15,6 @@
         android:title="发现" />
     <item
         android:id="@+id/bb_menu_my"
-        android:icon="@mipmap/bb_my_1"
+        android:icon="@mipmap/bb_my1"
         android:title="我" />
 </menu>
