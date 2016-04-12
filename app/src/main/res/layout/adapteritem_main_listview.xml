@@ -38,6 +38,19 @@
             android:textColor="#8A000000"
             android:textSize="12sp" />
 
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="认证"-->
+            <!--android:textSize="12sp"-->
+            <!--android:background="@drawable/tag"-->
+            <!--android:layout_toRightOf="@id/main_item_user_name"-->
+            <!--android:layout_alignTop="@id/main_item_user_name"-->
+            <!--android:layout_marginTop="-10dp"-->
+            <!--android:layout_marginLeft="5dp"-->
+            <!--android:gravity="center"-->
+            <!--android:textColor="#000000"/>-->
+
         <TextView
             android:id="@+id/main_item_title"
             android:layout_width="wrap_content"

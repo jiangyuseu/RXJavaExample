@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.baozou.rxjavaexample.R;
 import com.baozou.rxjavaexample.model.CourseBean;
 import com.baozou.rxjavaexample.model.CoursesBean;
+import com.baozou.rxjavaexample.view.HorizontalListView;
 import com.baozou.rxjavaexample.view.PinnedSectionListView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -30,12 +31,14 @@ public class MainListViewAdapter extends BaseAdapter implements PinnedSectionLis
     private LayoutInflater mInflater;
     private DisplayImageOptions options;
     private View cateView;
+    private MainCategoryAdapter categoryAdapter;
 
     public MainListViewAdapter(Context context, CoursesBean bean) {
         this.mContext = context;
         this.bean = bean;
         this.mInflater = LayoutInflater.from(context);
         options = new DisplayImageOptions.Builder().displayer(new RoundedBitmapDisplayer(40)).build();
+        categoryAdapter = new MainCategoryAdapter(context,bean.getItems());
     }
 
     public void setData(CoursesBean bean) {
@@ -90,7 +93,7 @@ public class MainListViewAdapter extends BaseAdapter implements PinnedSectionLis
                 case 0:
                     cateHolder = new CategoryHolder();
                     view = mInflater.inflate(R.layout.adapteritem_main_category, viewGroup, false);
-                    cateHolder.category = (TextView)view.findViewById(R.id.category);
+                    cateHolder.category = (HorizontalListView)view.findViewById(R.id.category_list);
                     view.setTag(cateHolder);
                     break;
                 case 1:
@@ -120,7 +123,7 @@ public class MainListViewAdapter extends BaseAdapter implements PinnedSectionLis
 
         if(type == 0){
             if(bean.getItems()!=null && bean.getItems().size()>0){
-                cateHolder.category.setText(bean.getItems().get(0).getName());
+                cateHolder.category.setAdapter(categoryAdapter);
             }
         }else if(type == 1){
             CourseBean mBean = null;
@@ -139,7 +142,7 @@ public class MainListViewAdapter extends BaseAdapter implements PinnedSectionLis
     }
 
     private class CategoryHolder{
-        private TextView category;
+        private HorizontalListView category;
     }
 
     private class ViewHolder {
