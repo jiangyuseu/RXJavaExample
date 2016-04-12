@@ -112,7 +112,7 @@ public class MainFragment extends BaseFragment {
 
     private void initView() {
         mHeader = new MainTopHeaderView(act, coursesBean.getTop_courses());
-        mAdapter = new MainListViewAdapter(act, coursesBean.getData());
+        mAdapter = new MainListViewAdapter(act, coursesBean);
         mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
 
             @Override
@@ -232,6 +232,10 @@ public class MainFragment extends BaseFragment {
                         coursesBean.setData(bean.getData());
                         coursesBean.setTimestamp(bean.getTimestamp());
                         coursesBean.setTop_courses(bean.getTop_courses());
+                        coursesBean.setItems(bean.getItems());
+                        //刷新列表数据
+                        mAdapter.setData(bean);
+                        mAdapter.notifyDataSetChanged();
                         // 刷新头图
                         mHeader.headerSetData(bean.getTop_courses());
                         mTimestamp = bean.getTimestamp();

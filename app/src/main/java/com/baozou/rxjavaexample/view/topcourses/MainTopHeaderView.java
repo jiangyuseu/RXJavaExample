@@ -112,6 +112,7 @@ public class MainTopHeaderView {
 
     public void headerSetData(List<CourseBean> list){
         this.top_stories = list;
+        mTopPagerAdapter.setData(list);
         mTopPagerAdapter.notifyDataSetChanged();
         if (top_stories.size() > 0 ){
             mian_heard_desc.setText(top_stories.get(0).getTitle());

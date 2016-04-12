@@ -13,3 +13,4 @@ public interface GetMainDataApi {
     @GET("teaching/course/_get")
     Observable<CoursesBean> getMainData(@Query("location") String location,@Query("timestamp") long timestamp);
 }
+

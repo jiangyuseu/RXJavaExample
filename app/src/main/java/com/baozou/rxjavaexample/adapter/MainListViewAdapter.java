@@ -8,9 +8,14 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.baozou.rxjavaexample.R;
 import com.baozou.rxjavaexample.model.CourseBean;
+import com.baozou.rxjavaexample.model.CoursesBean;
+import com.baozou.rxjavaexample.view.PinnedSectionListView;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import java.util.List;
 
@@ -18,26 +23,34 @@ import java.util.List;
  * Created by jiangyu on 2016/3/28.
  * 首页列表adapter
  */
-public class MainListViewAdapter extends BaseAdapter {
+public class MainListViewAdapter extends BaseAdapter implements PinnedSectionListView.PinnedSectionListAdapter {
 
     private Context mContext;
-    private List<CourseBean> bean;
+    private CoursesBean bean;
     private LayoutInflater mInflater;
+    private DisplayImageOptions options;
+    private View cateView;
 
-    public MainListViewAdapter(Context context, List<CourseBean> bean) {
+    public MainListViewAdapter(Context context, CoursesBean bean) {
         this.mContext = context;
         this.bean = bean;
         this.mInflater = LayoutInflater.from(context);
+        options = new DisplayImageOptions.Builder().displayer(new RoundedBitmapDisplayer(40)).build();
+    }
+
+    public void setData(CoursesBean bean) {
+        this.bean = bean;
     }
 
     @Override
     public int getCount() {
-        return bean.size();
+        //pos =0 为类目
+        return bean.getData().size()+1;
     }
 
     @Override
     public Object getItem(int i) {
-        return bean.get(i);
+        return bean.getData().get(i);
     }
 
     @Override
@@ -46,32 +59,87 @@ public class MainListViewAdapter extends BaseAdapter {
     }
 
     @Override
+    public int getItemViewType(int position) {
+        if (position == 0) {
+            return 0;
+        } else {
+            return 1;
+        }
+    }
+
+    @Override
+    public int getViewTypeCount() {
+        return 2;
+    }
+
+    @Override
+    public boolean isItemViewTypePinned(int viewType) {
+        if (viewType == 0) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHolder holder = null;
+        CategoryHolder cateHolder = null;
+        int type = getItemViewType(i);
         if (view == null) {
-            holder = new ViewHolder();
-            view = mInflater.inflate(R.layout.adapteritem_main_listview, viewGroup, false);
-            holder.contentView = (RelativeLayout) view.findViewById(R.id.content_view);
-            holder.itemImg = (ImageView) view.findViewById(R.id.main_item_image);
-            holder.userImg = (ImageView) view.findViewById(R.id.main_item_user_img);
-            holder.userName = (TextView) view.findViewById(R.id.main_item_user_name);
-            holder.itemTitle = (TextView) view.findViewById(R.id.main_item_title);
-            holder.itemCourse = (TextView) view.findViewById(R.id.main_item_tag);
-            holder.itemNumber = (TextView) view.findViewById(R.id.main_item_number);
-            view.setTag(holder);
+            switch (type) {
+                case 0:
+                    cateHolder = new CategoryHolder();
+                    view = mInflater.inflate(R.layout.adapteritem_main_category, viewGroup, false);
+                    cateHolder.category = (TextView)view.findViewById(R.id.category);
+                    view.setTag(cateHolder);
+                    break;
+                case 1:
+                    holder = new ViewHolder();
+                    view = mInflater.inflate(R.layout.adapteritem_main_listview, viewGroup, false);
+                    holder.contentView = (RelativeLayout) view.findViewById(R.id.content_view);
+                    holder.itemImg = (ImageView) view.findViewById(R.id.main_item_image);
+                    holder.userImg = (ImageView) view.findViewById(R.id.main_item_user_img);
+                    holder.userName = (TextView) view.findViewById(R.id.main_item_user_name);
+                    holder.itemTitle = (TextView) view.findViewById(R.id.main_item_title);
+                    holder.itemCourse = (TextView) view.findViewById(R.id.main_item_tag);
+                    holder.itemNumber = (TextView) view.findViewById(R.id.main_item_number);
+                    view.setTag(holder);
+                    break;
+            }
         } else {
-            holder = (ViewHolder) view.getTag();
+            switch (type){
+                case 0:
+                    cateHolder = (CategoryHolder)view.getTag();
+                    break;
+                case 1:
+                    holder = (ViewHolder) view.getTag();
+                    break;
+            }
         }
 
-        CourseBean mBean = bean.get(i);
-        ImageLoader.getInstance().displayImage(mBean.getImage(),holder.itemImg);
-        ImageLoader.getInstance().displayImage(mBean.getTeacher().getAvatar(),holder.userImg);
-        holder.userName.setText(mBean.getTeacher().getName());
-        holder.itemTitle.setText(mBean.getTitle());
-        holder.itemCourse.setText(mBean.getName());
-        holder.itemNumber.setText(mBean.getTotal());
+
+        if(type == 0){
+            if(bean.getItems()!=null && bean.getItems().size()>0){
+                cateHolder.category.setText(bean.getItems().get(0).getName());
+            }
+        }else if(type == 1){
+            CourseBean mBean = null;
+            if(i > 0){
+                mBean = bean.getData().get(i-1);
+            }
+            ImageLoader.getInstance().displayImage(mBean.getImage(), holder.itemImg);
+            ImageLoader.getInstance().displayImage(mBean.getTeacher().getAvatar(), holder.userImg, options);
+            holder.userName.setText(mBean.getTeacher().getName());
+            holder.itemTitle.setText(mBean.getTitle());
+            holder.itemCourse.setText(mBean.getName());
+            holder.itemNumber.setText("|" + mBean.getTotal() + "人");
+        }
 
         return view;
+    }
+
+    private class CategoryHolder{
+        private TextView category;
     }
 
     private class ViewHolder {

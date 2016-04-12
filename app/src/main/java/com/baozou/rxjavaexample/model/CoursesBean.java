@@ -10,6 +10,8 @@ import java.util.List;
 public class CoursesBean {
     private List<CourseBean> top_courses = new ArrayList<>();
     private List<CourseBean> data = new ArrayList<>();
+    private List<ItemBean> items = new ArrayList<>();
+
     private long timestamp = 0;
 
     public long getTimestamp() {
@@ -34,5 +36,13 @@ public class CoursesBean {
 
     public void setData(List<CourseBean> data) {
         this.data = data;
+    }
+
+    public List<ItemBean> getItems() {
+        return items;
+    }
+
+    public void setItems(List<ItemBean> items) {
+        this.items = items;
     }
 }

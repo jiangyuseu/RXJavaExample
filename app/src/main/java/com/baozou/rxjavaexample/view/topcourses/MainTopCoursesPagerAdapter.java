@@ -32,6 +32,10 @@ public class MainTopCoursesPagerAdapter extends PagerAdapter {
         this.mImageOptions = new DisplayImageOptions.Builder().cacheOnDisc(true).build();
     }
 
+    public void setData(List<CourseBean> bean){
+        this.mTopStoryList = bean;
+    }
+
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         CourseBean topStory = mTopStoryList.get(position);
