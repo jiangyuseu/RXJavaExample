@@ -1,6 +1,8 @@
 package com.baozou.rxjavaexample.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +12,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.baozou.rxjavaexample.R;
+import com.baozou.rxjavaexample.activity.JumpControlActivity;
 import com.baozou.rxjavaexample.model.CourseBean;
 import com.baozou.rxjavaexample.model.CoursesBean;
+import com.baozou.rxjavaexample.model.ItemBean;
 import com.baozou.rxjavaexample.view.HorizontalListView;
 import com.baozou.rxjavaexample.view.PinnedSectionListView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -24,21 +28,21 @@ import java.util.List;
  * Created by jiangyu on 2016/3/28.
  * 首页列表adapter
  */
-public class MainListViewAdapter extends BaseAdapter implements PinnedSectionListView.PinnedSectionListAdapter {
+public class MainListViewAdapter extends BaseAdapter implements PinnedSectionListView.PinnedSectionListAdapter ,View.OnClickListener{
 
-    private Context mContext;
+    private Activity mContext;
     private CoursesBean bean;
     private LayoutInflater mInflater;
     private DisplayImageOptions options;
     private View cateView;
     private MainCategoryAdapter categoryAdapter;
 
-    public MainListViewAdapter(Context context, CoursesBean bean) {
+    public MainListViewAdapter(Activity context, CoursesBean bean) {
         this.mContext = context;
         this.bean = bean;
         this.mInflater = LayoutInflater.from(context);
         options = new DisplayImageOptions.Builder().displayer(new RoundedBitmapDisplayer(40)).build();
-        categoryAdapter = new MainCategoryAdapter(context,bean.getItems());
+        categoryAdapter = new MainCategoryAdapter(context, bean.getItems());
     }
 
     public void setData(CoursesBean bean) {
@@ -48,7 +52,7 @@ public class MainListViewAdapter extends BaseAdapter implements PinnedSectionLis
     @Override
     public int getCount() {
         //pos =0 为类目
-        return bean.getData().size()+1;
+        return bean.getData().size() + 2;
     }
 
     @Override
@@ -65,14 +69,16 @@ public class MainListViewAdapter extends BaseAdapter implements PinnedSectionLis
     public int getItemViewType(int position) {
         if (position == 0) {
             return 0;
-        } else {
+        } else if (position == 1) {
             return 1;
+        } else {
+            return 2;
         }
     }
 
     @Override
     public int getViewTypeCount() {
-        return 2;
+        return 3;
     }
 
     @Override
@@ -93,10 +99,40 @@ public class MainListViewAdapter extends BaseAdapter implements PinnedSectionLis
                 case 0:
                     cateHolder = new CategoryHolder();
                     view = mInflater.inflate(R.layout.adapteritem_main_category, viewGroup, false);
-                    cateHolder.category = (HorizontalListView)view.findViewById(R.id.category_list);
+                    cateHolder.icon1 = (ImageView)view.findViewById(R.id.item_icon_1);
+                    cateHolder.icon2 = (ImageView)view.findViewById(R.id.item_icon_2);
+                    cateHolder.icon3 = (ImageView)view.findViewById(R.id.item_icon_3);
+                    cateHolder.icon4 = (ImageView)view.findViewById(R.id.item_icon_4);
+                    cateHolder.icon5 = (ImageView)view.findViewById(R.id.item_icon_5);
+                    cateHolder.icon6 = (ImageView)view.findViewById(R.id.item_icon_6);
+                    cateHolder.icon7 = (ImageView)view.findViewById(R.id.item_icon_7);
+                    cateHolder.icon8 = (ImageView)view.findViewById(R.id.item_icon_8);
+
+                    cateHolder.text1= (TextView)view.findViewById(R.id.item_text_1);
+                    cateHolder.text2= (TextView)view.findViewById(R.id.item_text_2);
+                    cateHolder.text3= (TextView)view.findViewById(R.id.item_text_3);
+                    cateHolder.text4= (TextView)view.findViewById(R.id.item_text_4);
+                    cateHolder.text5= (TextView)view.findViewById(R.id.item_text_5);
+                    cateHolder.text6= (TextView)view.findViewById(R.id.item_text_6);
+                    cateHolder.text7= (TextView)view.findViewById(R.id.item_text_7);
+                    cateHolder.text8= (TextView)view.findViewById(R.id.item_text_8);
+
+                    cateHolder.layout1 = (RelativeLayout)view.findViewById(R.id.layout1);
+                    cateHolder.layout2 = (RelativeLayout)view.findViewById(R.id.layout2);
+                    cateHolder.layout3 = (RelativeLayout)view.findViewById(R.id.layout3);
+                    cateHolder.layout4 = (RelativeLayout)view.findViewById(R.id.layout4);
+                    cateHolder.layout5 = (RelativeLayout)view.findViewById(R.id.layout5);
+                    cateHolder.layout6 = (RelativeLayout)view.findViewById(R.id.layout6);
+                    cateHolder.layout7 = (RelativeLayout)view.findViewById(R.id.layout7);
+                    cateHolder.layout8 = (RelativeLayout)view.findViewById(R.id.layout8);
+
                     view.setTag(cateHolder);
+
                     break;
                 case 1:
+                    view = mInflater.inflate(R.layout.adapteritem_main_banner,viewGroup,false);
+                    break;
+                case 2:
                     holder = new ViewHolder();
                     view = mInflater.inflate(R.layout.adapteritem_main_listview, viewGroup, false);
                     holder.contentView = (RelativeLayout) view.findViewById(R.id.content_view);
@@ -110,9 +146,9 @@ public class MainListViewAdapter extends BaseAdapter implements PinnedSectionLis
                     break;
             }
         } else {
-            switch (type){
+            switch (type) {
                 case 0:
-                    cateHolder = (CategoryHolder)view.getTag();
+                    cateHolder = (CategoryHolder) view.getTag();
                     break;
                 case 1:
                     holder = (ViewHolder) view.getTag();
@@ -121,28 +157,79 @@ public class MainListViewAdapter extends BaseAdapter implements PinnedSectionLis
         }
 
 
-        if(type == 0){
-            if(bean.getItems()!=null && bean.getItems().size()>0){
-                cateHolder.category.setAdapter(categoryAdapter);
+        if (type == 0) {
+            if(bean!=null && bean.getItems().size()==8){
+                ImageLoader.getInstance().displayImage(bean.getItems().get(0).getIcon(),cateHolder.icon1);
+                cateHolder.text1.setText(bean.getItems().get(0).getName());
+
+                ImageLoader.getInstance().displayImage(bean.getItems().get(1).getIcon(), cateHolder.icon2);
+                cateHolder.text2.setText(bean.getItems().get(1).getName());
+
+                ImageLoader.getInstance().displayImage(bean.getItems().get(2).getIcon(), cateHolder.icon3);
+                cateHolder.text3.setText(bean.getItems().get(2).getName());
+
+                ImageLoader.getInstance().displayImage(bean.getItems().get(3).getIcon(), cateHolder.icon4);
+                cateHolder.text4.setText(bean.getItems().get(3).getName());
+
+                ImageLoader.getInstance().displayImage(bean.getItems().get(4).getIcon(), cateHolder.icon5);
+                cateHolder.text5.setText(bean.getItems().get(4).getName());
+
+                ImageLoader.getInstance().displayImage(bean.getItems().get(5).getIcon(), cateHolder.icon6);
+                cateHolder.text6.setText(bean.getItems().get(5).getName());
+
+                ImageLoader.getInstance().displayImage(bean.getItems().get(6).getIcon(), cateHolder.icon7);
+                cateHolder.text7.setText(bean.getItems().get(6).getName());
+
+                ImageLoader.getInstance().displayImage(bean.getItems().get(7).getIcon(), cateHolder.icon8);
+                cateHolder.text8.setText(bean.getItems().get(7).getName());
+
+                cateHolder.layout1.setOnClickListener(this);
+                cateHolder.layout2.setOnClickListener(this);
+                cateHolder.layout3.setOnClickListener(this);
+                cateHolder.layout4.setOnClickListener(this);
+                cateHolder.layout5.setOnClickListener(this);
+                cateHolder.layout6.setOnClickListener(this);
+                cateHolder.layout7.setOnClickListener(this);
+                cateHolder.layout8.setOnClickListener(this);
             }
-        }else if(type == 1){
+
+        } else if (type == 2) {
             CourseBean mBean = null;
-            if(i > 0){
-                mBean = bean.getData().get(i-1);
+            if (i > 1) {
+                mBean = bean.getData().get(i - 2);
             }
-            ImageLoader.getInstance().displayImage(mBean.getImage(), holder.itemImg);
-            ImageLoader.getInstance().displayImage(mBean.getTeacher().getAvatar(), holder.userImg, options);
-            holder.userName.setText(mBean.getTeacher().getName());
-            holder.itemTitle.setText(mBean.getTitle());
-            holder.itemCourse.setText(mBean.getName());
-            holder.itemNumber.setText("|" + mBean.getTotal() + "人");
+            try{
+                ImageLoader.getInstance().displayImage(mBean.getImage(), holder.itemImg);
+                ImageLoader.getInstance().displayImage(mBean.getTeacher().getAvatar(), holder.userImg, options);
+                holder.userName.setText(mBean.getTeacher().getName());
+                holder.itemTitle.setText(mBean.getTitle());
+                holder.itemCourse.setText(mBean.getName());
+                holder.itemNumber.setText("|" + mBean.getTotal() + "人");
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
         }
 
         return view;
     }
 
-    private class CategoryHolder{
-        private HorizontalListView category;
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.layout1:
+                Intent intent = new Intent(mContext, JumpControlActivity.class);
+                intent.putExtra("url",bean.getItems().get(0).getUrl());
+                mContext.startActivity(intent);
+                break;
+
+        }
+    }
+
+    private class CategoryHolder {
+        private ImageView icon1,icon2,icon3,icon4,icon5,icon6,icon7,icon8;
+        private TextView text1,text2,text3,text4,text5,text6,text7,text8;
+        private RelativeLayout layout1,layout2,layout3,layout4,layout5,layout6,layout7,layout8;
     }
 
     private class ViewHolder {

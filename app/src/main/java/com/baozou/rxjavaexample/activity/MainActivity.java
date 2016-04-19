@@ -35,7 +35,7 @@ public class MainActivity extends BaseActivity {
     /* 当前Tag值 */
     private String mContentTag = "";
 
-    private BottomBar bottomBar;
+//    private BottomBar bottomBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,19 +43,19 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         // Bottmobar init
-        bottomBar = BottomBar.attach(this, savedInstanceState);
-        bottomBar.setItemsFromMenu(R.menu.bottombar_menu, new OnMenuTabClickListener() {
-            @Override
-            public void onMenuTabSelected(@IdRes int menuItemId) {
-                jumpFragment(menuItemId);
-            }
-
-            @Override
-            public void onMenuTabReSelected(@IdRes int menuItemId) {
-
-            }
-        });
-        bottomBar.mapColorForTab(0, ContextCompat.getColor(this, R.color.main_style_color));
+//        bottomBar = BottomBar.attach(this, savedInstanceState);
+//        bottomBar.setItemsFromMenu(R.menu.bottombar_menu, new OnMenuTabClickListener() {
+//            @Override
+//            public void onMenuTabSelected(@IdRes int menuItemId) {
+//                jumpFragment(menuItemId);
+//            }
+//
+//            @Override
+//            public void onMenuTabReSelected(@IdRes int menuItemId) {
+//
+//            }
+//        });
+//        bottomBar.mapColorForTab(0, ContextCompat.getColor(this, R.color.main_style_color));
 
         //执行首页跳转
         if (savedInstanceState == null) {
@@ -76,7 +76,7 @@ public class MainActivity extends BaseActivity {
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState, outPersistentState);
-        bottomBar.onSaveInstanceState(outState);
+//        bottomBar.onSaveInstanceState(outState);
     }
 
     private void jumpFragment(int menuItemId) {

@@ -35,6 +35,9 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".activity.JumpControlActivity" />
+        <activity android:name=".activity.MathsActivity" />
+
         <!--share sdk 短信验证-->
         <activity
             android:name="com.mob.tools.MobUIShell"

@@ -65,7 +65,7 @@ public class MainTopHeaderView {
         DisplayMetrics metrices = new DisplayMetrics();
         act.getWindowManager().getDefaultDisplay().getMetrics(metrices);
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) this.mTopPagerContainer.getLayoutParams();
-        params.height = metrices.widthPixels * 3 / 5;
+        params.height = metrices.widthPixels * 2 / 5;
         params.width = metrices.widthPixels;
         this.mTopPagerContainer.setLayoutParams(params);
 

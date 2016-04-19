@@ -8,7 +8,7 @@
     <color name="gray">#666666</color>
 
     <!--首页-->
-    <color name="main_style_color">#FFFB3D4F</color>
-    <color name="main_text_pre">#F94254</color>
+    <color name="main_style_color">#FFFD9001</color>
+    <color name="main_text_pre">#FFFD9001</color>
     <color name="main_text">#FF717171</color>
 </resources>

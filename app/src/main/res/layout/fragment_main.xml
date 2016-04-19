@@ -7,7 +7,7 @@
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/actionbar_base" />
+        layout="@layout/actionbar_main" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_container"

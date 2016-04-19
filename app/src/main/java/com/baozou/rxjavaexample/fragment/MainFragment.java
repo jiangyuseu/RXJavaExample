@@ -61,8 +61,8 @@ public class MainFragment extends BaseFragment {
     @Bind(R.id.swipe_container)
     SwipeRefreshLayout swipeLayout;
 
-    @Bind(R.id.toolbar)
-    Toolbar mToolBar;
+//    @Bind(R.id.toolbar)
+//    Toolbar mToolBar;
 
     private MenuProviderMain menuProvider;
 
@@ -104,9 +104,9 @@ public class MainFragment extends BaseFragment {
         initView();
         initPtrViews();
         initLocation();
-        setupActionBar();
+//        setupActionBar();
         // 若不设置，onCreateOptionsMenu方法不会回调
-        setHasOptionsMenu(true);
+//        setHasOptionsMenu(true);
         getMainData(0);
     }
 
@@ -154,31 +154,30 @@ public class MainFragment extends BaseFragment {
         });
     }
 
-    private void setupActionBar() {
-        if (mToolBar != null) {
-            mToolBar.setTitle("RXJava+Retrofit");
-            ((BaseActivity) act).setSupportActionBar(mToolBar);
-            mToolBar.setTitleTextColor(Color.WHITE);
-        }
-    }
+//    private void setupActionBar() {
+//        if (mToolBar != null) {
+//            mToolBar.setTitle("");
+//            ((BaseActivity) act).setSupportActionBar(mToolBar);
+//        }
+//    }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.main, menu);
-        menuProvider = (MenuProviderMain) MenuItemCompat.getActionProvider(menu.findItem(R.id.main_menu));
-        if (menuProvider != null) {
-            menuProvider.setOnClickLister(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (v.getId() == R.id.location_img) {
-                        mLocationClient.start();
-                        menuProvider.getTextView().setText("正在定位");
-                    }
-                }
-            });
-        }
-        super.onCreateOptionsMenu(menu, inflater);
-    }
+//    @Override
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        inflater.inflate(R.menu.main, menu);
+//        menuProvider = (MenuProviderMain) MenuItemCompat.getActionProvider(menu.findItem(R.id.main_menu));
+//        if (menuProvider != null) {
+//            menuProvider.setOnClickLister(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    if (v.getId() == R.id.location_img) {
+//                        mLocationClient.start();
+//                        menuProvider.getTextView().setText("正在定位");
+//                    }
+//                }
+//            });
+//        }
+//        super.onCreateOptionsMenu(menu, inflater);
+//    }
 
     private void initLocation() {
         mLocationClient = new LocationClient(act.getApplicationContext());

@@ -10,7 +10,7 @@ import rx.Observable;
  * 获取首页数据api
  */
 public interface GetMainDataApi {
-    @GET("teaching/course/_get")
+    @GET("teaching/index")
     Observable<CoursesBean> getMainData(@Query("location") String location,@Query("timestamp") long timestamp);
 }
 
