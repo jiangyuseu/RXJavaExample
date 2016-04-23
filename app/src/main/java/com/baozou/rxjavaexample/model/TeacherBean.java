@@ -1,10 +1,13 @@
 package com.baozou.rxjavaexample.model;
 
+import java.io.Serializable;
+
 /**
  * Created by jiangyu on 2016/3/28.
  * 标准格式的teacherbean
  */
-public class TeacherBean {
+public class TeacherBean implements Serializable {
+    private static final long serialVersionUID = 8782065797339541614L;
     private String name;
     private int tid;
     private String avatar;

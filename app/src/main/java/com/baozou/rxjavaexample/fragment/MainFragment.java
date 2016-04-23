@@ -17,6 +17,8 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baozou.rxjavaexample.R;
+import com.baozou.rxjavaexample.common.ACache;
+import com.baozou.rxjavaexample.common.Constants;
 import com.baozou.rxjavaexample.units.main.MainListViewAdapter;
 import com.baozou.rxjavaexample.base.BaseFragment;
 import com.baozou.rxjavaexample.model.CoursesBean;
@@ -67,6 +69,8 @@ public class MainFragment extends BaseFragment {
     private String location;
     private long mTimestamp;
 
+    private ACache mCache;
+
 
     @Nullable
     @Override
@@ -90,13 +94,12 @@ public class MainFragment extends BaseFragment {
         initView();
         initPtrViews();
         initLocation();
-//        setupActionBar();
-        // 若不设置，onCreateOptionsMenu方法不会回调
-//        setHasOptionsMenu(true);
+        getMainCacheData();
         getMainData(0);
     }
 
     private void initView() {
+        mCache = ACache.get(act);
         mHeader = new MainTopHeaderView(act, coursesBean.getTop_courses());
         mAdapter = new MainListViewAdapter(act, coursesBean);
         mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -140,31 +143,6 @@ public class MainFragment extends BaseFragment {
         });
     }
 
-//    private void setupActionBar() {
-//        if (mToolBar != null) {
-//            mToolBar.setTitle("");
-//            ((BaseActivity) act).setSupportActionBar(mToolBar);
-//        }
-//    }
-
-//    @Override
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        inflater.inflate(R.menu.main, menu);
-//        menuProvider = (MenuProviderMain) MenuItemCompat.getActionProvider(menu.findItem(R.id.main_menu));
-//        if (menuProvider != null) {
-//            menuProvider.setOnClickLister(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    if (v.getId() == R.id.location_img) {
-//                        mLocationClient.start();
-//                        menuProvider.getTextView().setText("正在定位");
-//                    }
-//                }
-//            });
-//        }
-//        super.onCreateOptionsMenu(menu, inflater);
-//    }
-
     private void initLocation() {
         mLocationClient = new LocationClient(act.getApplicationContext());
         mLocationClient.registerLocationListener(myListener);
@@ -197,7 +175,7 @@ public class MainFragment extends BaseFragment {
 
     private void getMainData(long timestamp) {
         GetMainDataApi service = retrofit.create(GetMainDataApi.class);
-        service.getMainData("南京市",timestamp)
+        service.getMainData("南京市", timestamp)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
@@ -214,6 +192,8 @@ public class MainFragment extends BaseFragment {
 
                     @Override
                     public void onNext(CoursesBean bean) {
+                        //缓存首页数据
+                        mCache.put(Constants.MAIN_CACHE_KEY, bean);
                         coursesBean.setData(bean.getData());
                         coursesBean.setTimestamp(bean.getTimestamp());
                         coursesBean.setTop_courses(bean.getTop_courses());
@@ -226,5 +206,14 @@ public class MainFragment extends BaseFragment {
                         mTimestamp = bean.getTimestamp();
                     }
                 });
+    }
+
+    private void getMainCacheData() {
+        CoursesBean cacheBean = (CoursesBean) mCache.getAsObject(Constants.MAIN_CACHE_KEY);
+        if (cacheBean != null) {
+            mAdapter.setData(cacheBean);
+            mAdapter.notifyDataSetChanged();
+            mHeader.headerSetData(cacheBean.getTop_courses());
+        }
     }
 }

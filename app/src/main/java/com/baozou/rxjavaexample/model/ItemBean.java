@@ -1,10 +1,14 @@
 package com.baozou.rxjavaexample.model;
 
+import java.io.Serializable;
+
 /**
  * Created by jiangyu on 2016/4/12.
  * 首页具体类目item
  */
-public class ItemBean {
+public class ItemBean implements Serializable {
+
+    private static final long serialVersionUID = 390874997414826516L;
     private long iid;
     private String name;
     private String icon;

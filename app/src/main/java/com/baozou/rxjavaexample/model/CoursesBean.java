@@ -1,5 +1,6 @@
 package com.baozou.rxjavaexample.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,11 +8,11 @@ import java.util.List;
  * Created by lenovo on 2016/3/29.
  * 主页数据Bean
  */
-public class CoursesBean {
+public class CoursesBean implements Serializable {
+    private static final long serialVersionUID = -4781687256464337325L;
     private List<CourseBean> topCourses = new ArrayList<>();
     private List<CourseBean> datas = new ArrayList<>();
     private List<ItemBean> items = new ArrayList<>();
-
     private long timestamp = 0;
 
     public long getTimestamp() {

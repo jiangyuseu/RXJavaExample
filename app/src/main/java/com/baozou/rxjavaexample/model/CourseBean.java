@@ -1,10 +1,14 @@
 package com.baozou.rxjavaexample.model;
 
+import java.io.Serializable;
+
 /**
  * Created by jiangyu on 2016/3/28.
  * 标准的课程bean
  */
-public class CourseBean {
+public class CourseBean implements Serializable{
+
+    private static final long serialVersionUID = -1019643443881559865L;
 
     private int cid;
     private String name;
@@ -17,6 +21,7 @@ public class CourseBean {
     private int total;
     private double price;
     private String address;
+
 
     public int getCid() {
         return cid;

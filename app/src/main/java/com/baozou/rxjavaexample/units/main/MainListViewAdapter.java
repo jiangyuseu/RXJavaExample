@@ -23,7 +23,7 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
  * Created by jiangyu on 2016/3/28.
  * 首页列表adapter
  */
-public class MainListViewAdapter extends BaseAdapter implements PinnedSectionListView.PinnedSectionListAdapter, View.OnClickListener {
+public class MainListViewAdapter extends BaseAdapter implements View.OnClickListener {
 
     private Activity mContext;
     private CoursesBean bean;
@@ -74,14 +74,6 @@ public class MainListViewAdapter extends BaseAdapter implements PinnedSectionLis
     @Override
     public int getViewTypeCount() {
         return 3;
-    }
-
-    @Override
-    public boolean isItemViewTypePinned(int viewType) {
-        if (viewType == 0) {
-            return true;
-        }
-        return false;
     }
 
     @Override

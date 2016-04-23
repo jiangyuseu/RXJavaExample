@@ -4,7 +4,6 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.webkit.WebView;
 
 import com.baozou.rxjavaexample.units.english.EnglishActivity;
 import com.baozou.rxjavaexample.units.exam.ExamActivity;
@@ -21,7 +20,6 @@ import com.baozou.rxjavaexample.units.video.VideosActivity;
  */
 public class JumpControlService extends Service {
 
-    private WebView webView;
     private String url;
 
     @Nullable
