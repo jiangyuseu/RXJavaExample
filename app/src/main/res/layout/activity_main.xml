@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
-                android:src="@mipmap/ic_home_normal_n" />
+                android:src="@mipmap/ic_my_normal_n" />
 
             <TextView
                 android:id="@+id/video_txt"
@@ -72,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
-                android:src="@mipmap/ic_home_normal_n" />
+                android:src="@mipmap/ic_massage_normal_n" />
 
             <TextView
                 android:id="@+id/info_txt"
@@ -80,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/info_icon"
                 android:layout_centerHorizontal="true"
-                android:text="待定"
+                android:text="信息"
                 android:textColor="#6D6D6E" />
         </RelativeLayout>
 
@@ -96,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
-                android:src="@mipmap/ic_home_normal_n" />
+                android:src="@mipmap/ic_my_normal_n" />
 
             <TextView
                 android:id="@+id/my_txt"

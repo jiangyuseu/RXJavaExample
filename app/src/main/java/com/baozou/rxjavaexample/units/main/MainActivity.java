@@ -106,6 +106,13 @@ public class MainActivity extends BaseActivity {
     private void onHomeClick() {
         mainImg.setImageResource(R.mipmap.ic_home_pressed_n);
         mainTxt.setTextColor(getResources().getColor(R.color.main_style_color));
+        videoImg.setImageResource(R.mipmap.ic_my_normal_n);
+        videoTxt.setTextColor(getResources().getColor(R.color.main_text));
+        infoImg.setImageResource(R.mipmap.ic_massage_normal_n);
+        infoTxt.setTextColor(getResources().getColor(R.color.main_text));
+        myImg.setImageResource(R.mipmap.ic_my_normal_n);
+        myTxt.setTextColor(getResources().getColor(R.color.main_text));
+
         String mainTag = MainFragment.TAG;
         Fragment mainFragment = getSupportFragmentManager().findFragmentByTag(mainTag);
         if (mainFragment == null) {
@@ -117,6 +124,12 @@ public class MainActivity extends BaseActivity {
     private void onVideoClick() {
         mainImg.setImageResource(R.mipmap.ic_home_normal_n);
         mainTxt.setTextColor(getResources().getColor(R.color.main_btn_no_press));
+        videoImg.setImageResource(R.mipmap.ic_my_pressed_n);
+        videoTxt.setTextColor(getResources().getColor(R.color.main_text_pre));
+        infoImg.setImageResource(R.mipmap.ic_massage_normal_n);
+        infoTxt.setTextColor(getResources().getColor(R.color.main_text));
+        myImg.setImageResource(R.mipmap.ic_my_normal_n);
+        myTxt.setTextColor(getResources().getColor(R.color.main_text));
         String videoTag = VideoFragment.TAG;
         Fragment videoFragment = getSupportFragmentManager().findFragmentByTag(videoTag);
         if (videoFragment == null) {
@@ -128,6 +141,12 @@ public class MainActivity extends BaseActivity {
     private void onInfoClick() {
         mainImg.setImageResource(R.mipmap.ic_home_normal_n);
         mainTxt.setTextColor(getResources().getColor(R.color.main_btn_no_press));
+        videoImg.setImageResource(R.mipmap.ic_my_normal_n);
+        videoTxt.setTextColor(getResources().getColor(R.color.main_text));
+        infoImg.setImageResource(R.mipmap.ic_massage_pressed_n);
+        infoTxt.setTextColor(getResources().getColor(R.color.main_text_pre));
+        myImg.setImageResource(R.mipmap.ic_my_normal_n);
+        myTxt.setTextColor(getResources().getColor(R.color.main_text));
         String infoTag = InfoFragment.TAG;
         Fragment infoFragment = getSupportFragmentManager().findFragmentByTag(infoTag);
         if (infoFragment == null) {
@@ -139,6 +158,12 @@ public class MainActivity extends BaseActivity {
     private void onMyClick() {
         mainImg.setImageResource(R.mipmap.ic_home_normal_n);
         mainTxt.setTextColor(getResources().getColor(R.color.main_btn_no_press));
+        videoImg.setImageResource(R.mipmap.ic_my_normal_n);
+        videoTxt.setTextColor(getResources().getColor(R.color.main_text));
+        infoImg.setImageResource(R.mipmap.ic_massage_normal_n);
+        infoTxt.setTextColor(getResources().getColor(R.color.main_text));
+        myImg.setImageResource(R.mipmap.ic_my_pressed_n);
+        myTxt.setTextColor(getResources().getColor(R.color.main_text_pre));
         String myTag = MyCenterFragment.TAG;
         Fragment myFragment = getSupportFragmentManager().findFragmentByTag(myTag);
         if (myFragment == null) {
