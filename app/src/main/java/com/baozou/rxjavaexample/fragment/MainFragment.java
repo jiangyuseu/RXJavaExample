@@ -49,9 +49,6 @@ public class MainFragment extends BaseFragment {
     @Bind(R.id.swipe_container)
     SwipeRefreshLayout swipeLayout;
 
-//    @Bind(R.id.toolbar)
-//    Toolbar mToolBar;
-
     private MenuProviderMain menuProvider;
 
     @Bind(R.id.main_listview)

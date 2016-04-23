@@ -11,4 +11,5 @@
     <color name="main_style_color">#FFFD9001</color>
     <color name="main_text_pre">#FFFD9001</color>
     <color name="main_text">#FF717171</color>
+    <color name="main_btn_no_press">#6D6D6E</color>
 </resources>

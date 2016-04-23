@@ -9,8 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.baozou.rxjavaexample.R;
 import com.baozou.rxjavaexample.base.BaseActivity;
@@ -29,9 +27,9 @@ import cn.smssdk.gui.RegisterPage;
  * Created by jiangyu on 2016/3/28.
  * 圈子Fragment
  */
-public class QuanziFragment extends BaseFragment {
+public class VideoFragment extends BaseFragment {
 
-    public static final String TAG = QuanziFragment.class.getSimpleName();
+    public static final String TAG = VideoFragment.class.getSimpleName();
     private View rootView;
     private Activity act;
 

@@ -46,7 +46,6 @@ public class MainListViewAdapter extends BaseAdapter implements View.OnClickList
 
     @Override
     public int getCount() {
-        //pos =0 为类目
         return bean.getData().size() + 2;
     }
 
@@ -63,8 +62,10 @@ public class MainListViewAdapter extends BaseAdapter implements View.OnClickList
     @Override
     public int getItemViewType(int position) {
         if (position == 0) {
+            //items入口
             return 0;
         } else if (position == 1) {
+            //倒计时或者广告入口
             return 1;
         } else {
             return 2;
