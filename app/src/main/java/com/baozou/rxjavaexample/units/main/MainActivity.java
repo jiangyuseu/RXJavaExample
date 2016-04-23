@@ -1,30 +1,17 @@
-package com.baozou.rxjavaexample.activity;
+package com.baozou.rxjavaexample.units.main;
 
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.baozou.rxjavaexample.R;
 import com.baozou.rxjavaexample.base.BaseActivity;
-import com.baozou.rxjavaexample.common.Constants;
 import com.baozou.rxjavaexample.fragment.MainFragment;
 import com.baozou.rxjavaexample.fragment.MyCenterFragment;
 import com.baozou.rxjavaexample.fragment.QuanziFragment;
-import com.roughike.bottombar.BottomBar;
-import com.roughike.bottombar.OnMenuTabClickListener;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
-import retrofit.GsonConverterFactory;
-import retrofit.Retrofit;
-import retrofit.RxJavaCallAdapterFactory;
 
 /**
  * Created by jiangyu on 2016/3/28.

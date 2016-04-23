@@ -28,15 +28,23 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="xiheNHqk33AZiexhTqNkGCVzeqaBlapC" />
 
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".units.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.JumpControlActivity" />
-        <activity android:name=".activity.MathsActivity" />
+        <service android:name=".base.JumpControlService" />
+
+        <activity android:name=".units.maths.MathsActivity" />
+        <activity android:name=".units.english.EnglishActivity" />
+        <activity android:name=".units.exam.ExamActivity" />
+        <activity android:name=".units.forasked.ForaskedActivity" />
+        <activity android:name=".units.politics.PoliticsActivity" />
+        <activity android:name=".units.share.ExperienceShareActivity" />
+        <activity android:name=".units.special.SpecialActivity" />
+        <activity android:name=".units.video.VideosActivity" />
 
         <!--share sdk 短信验证-->
         <activity
