@@ -1,6 +1,7 @@
 package com.baozou.rxjavaexample.units.user;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.baozou.rxjavaexample.R;
 import com.baozou.rxjavaexample.base.BaseActivity;
@@ -20,10 +22,13 @@ import butterknife.ButterKnife;
  * Created by jiangyu on 2016/3/28.
  * 个人中心Fragment
  */
-public class MyCenterFragment extends BaseFragment {
+public class MyCenterFragment extends BaseFragment{
     public static final String TAG = MyCenterFragment.class.getSimpleName();
     private View rootView;
     private Activity act;
+
+    @Bind(R.id.user_avatar)
+    public ImageView userAvatar;
 
     @Nullable
     @Override
@@ -43,6 +48,19 @@ public class MyCenterFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        initView();
     }
+
+    private void initView(){
+        userAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(act, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+
 
 }
