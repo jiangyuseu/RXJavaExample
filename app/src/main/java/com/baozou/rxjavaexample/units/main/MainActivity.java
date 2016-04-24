@@ -8,13 +8,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.baozou.rxjavaexample.R;
 import com.baozou.rxjavaexample.base.BaseActivity;
 import com.baozou.rxjavaexample.fragment.InfoFragment;
 import com.baozou.rxjavaexample.fragment.MainFragment;
-import com.baozou.rxjavaexample.fragment.MyCenterFragment;
+import com.baozou.rxjavaexample.units.user.MyCenterFragment;
 import com.baozou.rxjavaexample.fragment.VideoFragment;
 
 import butterknife.Bind;

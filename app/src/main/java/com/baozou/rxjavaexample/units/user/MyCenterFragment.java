@@ -1,4 +1,4 @@
-package com.baozou.rxjavaexample.fragment;
+package com.baozou.rxjavaexample.units.user;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -25,9 +25,6 @@ public class MyCenterFragment extends BaseFragment {
     private View rootView;
     private Activity act;
 
-    @Bind(R.id.toolbar)
-    Toolbar mToolBar;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,14 +43,6 @@ public class MyCenterFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setupActionBar();
     }
 
-    private void setupActionBar() {
-        if (mToolBar != null) {
-            mToolBar.setTitle("myCenter");
-            ((BaseActivity) act).setSupportActionBar(mToolBar);
-            mToolBar.setTitleTextColor(Color.WHITE);
-        }
-    }
 }
