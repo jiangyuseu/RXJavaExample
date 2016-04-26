@@ -3,6 +3,7 @@ package com.baozou.rxjavaexample;
 import android.app.Application;
 import android.content.Context;
 
+import com.baozou.rxjavaexample.common.Constants;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -19,8 +20,6 @@ public class XueApplication extends Application {
     public void onCreate() {
         super.onCreate();
         initImageLoader(getApplicationContext());
-
-        SMSSDK.initSDK(this, "1116c68e492a8", "ba9e7364ace85020229820fc6751dbee");
     }
 
     public static void initImageLoader(Context pContext) {

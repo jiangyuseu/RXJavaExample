@@ -1,22 +1,18 @@
 package com.baozou.rxjavaexample.fragment;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.baozou.rxjavaexample.R;
-import com.baozou.rxjavaexample.base.BaseActivity;
 import com.baozou.rxjavaexample.base.BaseFragment;
 
 import java.util.HashMap;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.smssdk.EventHandler;
@@ -33,8 +29,6 @@ public class VideoFragment extends BaseFragment {
     private View rootView;
     private Activity act;
 
-    @Bind(R.id.toolbar)
-    Toolbar mToolBar;
 
     @Nullable
     @Override
@@ -54,7 +48,6 @@ public class VideoFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setupActionBar();
     }
 
     @OnClick(R.id.test)
@@ -78,11 +71,4 @@ public class VideoFragment extends BaseFragment {
         registerPage.show(act);
     }
 
-    private void setupActionBar() {
-        if (mToolBar != null) {
-            mToolBar.setTitle("Quanzi");
-            ((BaseActivity) act).setSupportActionBar(mToolBar);
-            mToolBar.setTitleTextColor(Color.WHITE);
-        }
-    }
 }

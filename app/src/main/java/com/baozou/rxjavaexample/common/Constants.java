@@ -13,4 +13,15 @@ public class Constants {
      */
     public static final String MAIN_CACHE_KEY = "main_cache";
 
+    /**
+     * SMSSDK app key
+     */
+    public static final String SMSSDK_KEY = "1116c68e492a8";
+
+    /**
+     * SMSSDK app secret
+     */
+    public static final String SMSSDK_Secret = "ba9e7364ace85020229820fc6751dbee";
+
+
 }

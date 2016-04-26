@@ -33,9 +33,6 @@ public class InfoFragment extends BaseFragment {
     private View rootView;
     private Activity act;
 
-    @Bind(R.id.toolbar)
-    Toolbar mToolBar;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,7 +51,6 @@ public class InfoFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setupActionBar();
     }
 
     @OnClick(R.id.test)
@@ -78,11 +74,4 @@ public class InfoFragment extends BaseFragment {
         registerPage.show(act);
     }
 
-    private void setupActionBar() {
-        if (mToolBar != null) {
-            mToolBar.setTitle("Quanzi");
-            ((BaseActivity) act).setSupportActionBar(mToolBar);
-            mToolBar.setTitleTextColor(Color.WHITE);
-        }
-    }
 }
