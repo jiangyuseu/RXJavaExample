@@ -1,4 +1,4 @@
-package com.baozou.rxjavaexample.units.main;
+package com.baozou.rxjavaexample.units.main.view.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,7 +14,6 @@ import com.baozou.rxjavaexample.R;
 import com.baozou.rxjavaexample.base.JumpControlService;
 import com.baozou.rxjavaexample.model.CourseBean;
 import com.baozou.rxjavaexample.model.CoursesBean;
-import com.baozou.rxjavaexample.view.PinnedSectionListView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;

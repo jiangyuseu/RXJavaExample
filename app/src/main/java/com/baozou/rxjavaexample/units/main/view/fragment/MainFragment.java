@@ -1,4 +1,4 @@
-package com.baozou.rxjavaexample.fragment;
+package com.baozou.rxjavaexample.units.main.view.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -17,26 +17,25 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baozou.rxjavaexample.R;
+import com.baozou.rxjavaexample.base.BaseFragment;
 import com.baozou.rxjavaexample.common.ACache;
 import com.baozou.rxjavaexample.common.Constants;
-import com.baozou.rxjavaexample.units.main.MainListViewAdapter;
-import com.baozou.rxjavaexample.base.BaseFragment;
 import com.baozou.rxjavaexample.model.CoursesBean;
-import com.baozou.rxjavaexample.service.GetMainDataApi;
+import com.baozou.rxjavaexample.units.main.presenter.IMainPresenter;
+import com.baozou.rxjavaexample.units.main.presenter.MainPresenter;
+import com.baozou.rxjavaexample.units.main.view.MainView;
+import com.baozou.rxjavaexample.units.main.view.adapter.MainListViewAdapter;
 import com.baozou.rxjavaexample.view.MenuProviderMain;
 import com.baozou.rxjavaexample.view.topcourses.MainTopHeaderView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by jiangyu on 2016/3/28.
  * 首页
  */
-public class MainFragment extends BaseFragment {
+public class MainFragment extends BaseFragment implements MainView {
 
     public static final String TAG = MainFragment.class.getSimpleName();
     private View rootView;
@@ -69,6 +68,9 @@ public class MainFragment extends BaseFragment {
     private ACache mCache;
 
 
+    private IMainPresenter mPresenter;
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -88,11 +90,26 @@ public class MainFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        mPresenter = new MainPresenter(this);
         initView();
         initPtrViews();
         initLocation();
         getMainCacheData();
-        getMainData(0);
+        initData();
+    }
+
+    @Override
+    public void showMainData(CoursesBean bean) {
+        //刷新列表数据
+        mAdapter.setData(bean);
+        mAdapter.notifyDataSetChanged();
+        // 刷新头图
+        mHeader.headerSetData(bean.getTop_courses());
+        mTimestamp = bean.getTimestamp();
+    }
+
+    private void initData(){
+        mPresenter.getMainData(0);
     }
 
     private void initView() {
@@ -168,41 +185,6 @@ public class MainFragment extends BaseFragment {
                 Log.i("address", "" + location.getProvince() + " " + location.getCity());
             }
         }
-    }
-
-    private void getMainData(long timestamp) {
-        GetMainDataApi service = retrofit.create(GetMainDataApi.class);
-        service.getMainData("南京市", timestamp)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .unsubscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<CoursesBean>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(CoursesBean bean) {
-                        //缓存首页数据
-                        mCache.put(Constants.MAIN_CACHE_KEY, bean);
-                        coursesBean.setData(bean.getData());
-                        coursesBean.setTimestamp(bean.getTimestamp());
-                        coursesBean.setTop_courses(bean.getTop_courses());
-                        coursesBean.setItems(bean.getItems());
-                        //刷新列表数据
-                        mAdapter.setData(bean);
-                        mAdapter.notifyDataSetChanged();
-                        // 刷新头图
-                        mHeader.headerSetData(bean.getTop_courses());
-                        mTimestamp = bean.getTimestamp();
-                    }
-                });
     }
 
     private void getMainCacheData() {

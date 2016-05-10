@@ -1,4 +1,4 @@
-package com.baozou.rxjavaexample.units.main;
+package com.baozou.rxjavaexample.units.main.view.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

@@ -1,20 +1,16 @@
-package com.baozou.rxjavaexample.units.main;
+package com.baozou.rxjavaexample.units.main.view.activity;
 
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.baozou.rxjavaexample.R;
 import com.baozou.rxjavaexample.base.BaseActivity;
 import com.baozou.rxjavaexample.fragment.InfoFragment;
-import com.baozou.rxjavaexample.fragment.MainFragment;
-import com.baozou.rxjavaexample.units.user.MyCenterFragment;
 import com.baozou.rxjavaexample.fragment.VideoFragment;
+import com.baozou.rxjavaexample.units.main.view.fragment.MainFragment;
+import com.baozou.rxjavaexample.units.user.MyCenterFragment;
 import com.baozou.rxjavaexample.view.TabFooterView;
 
 import butterknife.Bind;
@@ -54,11 +50,11 @@ public class MainActivity extends BaseActivity implements TabFooterView.TabClick
     @Override
     public void MainTab() {
         String mainTag = MainFragment.TAG;
-        Fragment mainFragment = getSupportFragmentManager().findFragmentByTag(mainTag);
-        if (mainFragment == null) {
-            mainFragment = new MainFragment();
+        Fragment mainFragment1 = getSupportFragmentManager().findFragmentByTag(mainTag);
+        if (mainFragment1 == null) {
+            mainFragment1 = new MainFragment();
         }
-        switchContent(mainFragment, mainTag);
+        switchContent(mainFragment1, mainTag);
     }
 
     @Override
