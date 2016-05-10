@@ -1,11 +1,11 @@
 package com.baozou.rxjavaexample.units.main.presenter;
 
+import android.content.Context;
 import com.baozou.rxjavaexample.common.ACache;
 import com.baozou.rxjavaexample.common.Constants;
 import com.baozou.rxjavaexample.model.CoursesBean;
 import com.baozou.rxjavaexample.service.GetMainDataApi;
 import com.baozou.rxjavaexample.units.main.view.MainView;
-
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 import retrofit.RxJavaCallAdapterFactory;
@@ -24,13 +24,16 @@ public class MainPresenter implements IMainPresenter {
     private CoursesBean coursesBean = new CoursesBean();
     private ACache mCache;
     private MainView view;
+    private Context mContext;
 
-    public MainPresenter(MainView view) {
+    public MainPresenter(MainView view,Context context) {
         this.view = view;
+        this.mContext = context;
         init();
     }
 
     private void init() {
+        mCache = ACache.get(mContext);
         retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -58,6 +61,8 @@ public class MainPresenter implements IMainPresenter {
 
                     @Override
                     public void onNext(CoursesBean bean) {
+                        //缓存首页数据
+                        mCache.put(Constants.MAIN_CACHE_KEY, bean);
                         coursesBean.setData(bean.getData());
                         coursesBean.setTimestamp(bean.getTimestamp());
                         coursesBean.setTop_courses(bean.getTop_courses());
@@ -68,4 +73,11 @@ public class MainPresenter implements IMainPresenter {
                 });
     }
 
+    @Override
+    public void getMainCacheData() {
+        CoursesBean cacheBean = (CoursesBean) mCache.getAsObject(Constants.MAIN_CACHE_KEY);
+        if(cacheBean !=null){
+            view.showMainCacheData(cacheBean);
+        }
+    }
 }

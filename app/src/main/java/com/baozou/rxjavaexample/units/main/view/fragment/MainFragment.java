@@ -65,9 +65,6 @@ public class MainFragment extends BaseFragment implements MainView {
     private String location;
     private long mTimestamp;
 
-    private ACache mCache;
-
-
     private IMainPresenter mPresenter;
 
 
@@ -90,18 +87,15 @@ public class MainFragment extends BaseFragment implements MainView {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mPresenter = new MainPresenter(this);
+        mPresenter = new MainPresenter(this,act);
         initView();
         initPtrViews();
         initLocation();
-        getMainCacheData();
         initData();
     }
 
     @Override
     public void showMainData(CoursesBean bean) {
-        //缓存首页数据
-        mCache.put(Constants.MAIN_CACHE_KEY, bean);
         //刷新列表数据
         mAdapter.setData(bean);
         mAdapter.notifyDataSetChanged();
@@ -114,12 +108,19 @@ public class MainFragment extends BaseFragment implements MainView {
         mHeader.headerSetData(list);
     }
 
+    @Override
+    public void showMainCacheData(CoursesBean bean) {
+        mAdapter.setData(bean);
+        mAdapter.notifyDataSetChanged();
+        mHeader.headerSetData(bean.getTop_courses());
+    }
+
     private void initData(){
+        mPresenter.getMainCacheData();
         mPresenter.getMainData(0);
     }
 
     private void initView() {
-        mCache = ACache.get(act);
         mHeader = new MainTopHeaderView(act);
         mAdapter = new MainListViewAdapter(act);
         mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -190,15 +191,6 @@ public class MainFragment extends BaseFragment implements MainView {
                 }
                 Log.i("address", "" + location.getProvince() + " " + location.getCity());
             }
-        }
-    }
-
-    private void getMainCacheData() {
-        CoursesBean cacheBean = (CoursesBean) mCache.getAsObject(Constants.MAIN_CACHE_KEY);
-        if (cacheBean != null) {
-            mAdapter.setData(cacheBean);
-            mAdapter.notifyDataSetChanged();
-            mHeader.headerSetData(cacheBean.getTop_courses());
         }
     }
 }

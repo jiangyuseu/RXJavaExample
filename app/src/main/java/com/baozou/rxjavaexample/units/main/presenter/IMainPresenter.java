@@ -10,4 +10,9 @@ public interface IMainPresenter{
      */
     void getMainData(long timestamp);
 
+    /**
+     * 获取缓存数据
+     */
+    void getMainCacheData();
+
 }

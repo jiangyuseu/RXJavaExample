@@ -12,4 +12,6 @@ public interface MainView {
     void showMainData(CoursesBean bean);
 
     void showHeaderData(List<CourseBean> list);
+
+    void showMainCacheData(CoursesBean bean);
 }
