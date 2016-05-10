@@ -15,6 +15,7 @@ import com.baozou.rxjavaexample.fragment.InfoFragment;
 import com.baozou.rxjavaexample.fragment.MainFragment;
 import com.baozou.rxjavaexample.units.user.MyCenterFragment;
 import com.baozou.rxjavaexample.fragment.VideoFragment;
+import com.baozou.rxjavaexample.view.TabFooterView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -23,76 +24,23 @@ import butterknife.ButterKnife;
  * Created by jiangyu on 2016/3/28.
  * 首页
  */
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements TabFooterView.TabClickListener {
 
     /* 当前Tag值 */
     private String mContentTag = "";
 
-    @Bind(R.id.home_layout)
-    public RelativeLayout mainLayout;
-    @Bind(R.id.video_layout)
-    public RelativeLayout videoLayout;
-    @Bind(R.id.info_layout)
-    public RelativeLayout infoLayout;
-    @Bind(R.id.my_layout)
-    public RelativeLayout myLayout;
-
-    @Bind(R.id.home_icon)
-    public ImageView mainImg;
-    @Bind(R.id.video_icon)
-    public ImageView videoImg;
-    @Bind(R.id.info_icon)
-    public ImageView infoImg;
-    @Bind(R.id.my_icon)
-    public ImageView myImg;
-    @Bind(R.id.home_txt)
-    public TextView mainTxt;
-    @Bind(R.id.video_txt)
-    public TextView videoTxt;
-    @Bind(R.id.info_txt)
-    public TextView infoTxt;
-    @Bind(R.id.my_txt)
-    public TextView myTxt;
+    @Bind(R.id.tab_foot)
+    public TabFooterView footer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        initView(savedInstanceState);
 
-        mainLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onHomeClick();
-            }
-        });
+        footer.initTab();
+        footer.setTabClickListener(this);
 
-        videoLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onVideoClick();
-            }
-        });
-
-        infoLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onInfoClick();
-            }
-        });
-
-        myLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onMyClick();
-            }
-        });
-    }
-
-    private void initView(Bundle savedInstanceState) {
-        mainImg.setImageResource(R.mipmap.ic_home_pressed_n);
-        mainTxt.setTextColor(getResources().getColor(R.color.main_style_color));
         //执行首页跳转
         if (savedInstanceState == null) {
             FragmentTransaction tr = getSupportFragmentManager().beginTransaction();
@@ -100,18 +48,11 @@ public class MainActivity extends BaseActivity {
             tr.replace(R.id.content, new MainFragment(), mContentTag);
             tr.commitAllowingStateLoss();
         }
+
     }
 
-    private void onHomeClick() {
-        mainImg.setImageResource(R.mipmap.ic_home_pressed_n);
-        mainTxt.setTextColor(getResources().getColor(R.color.main_style_color));
-        videoImg.setImageResource(R.mipmap.ic_my_normal_n);
-        videoTxt.setTextColor(getResources().getColor(R.color.main_text));
-        infoImg.setImageResource(R.mipmap.ic_massage_normal_n);
-        infoTxt.setTextColor(getResources().getColor(R.color.main_text));
-        myImg.setImageResource(R.mipmap.ic_my_normal_n);
-        myTxt.setTextColor(getResources().getColor(R.color.main_text));
-
+    @Override
+    public void MainTab() {
         String mainTag = MainFragment.TAG;
         Fragment mainFragment = getSupportFragmentManager().findFragmentByTag(mainTag);
         if (mainFragment == null) {
@@ -120,15 +61,8 @@ public class MainActivity extends BaseActivity {
         switchContent(mainFragment, mainTag);
     }
 
-    private void onVideoClick() {
-        mainImg.setImageResource(R.mipmap.ic_home_normal_n);
-        mainTxt.setTextColor(getResources().getColor(R.color.main_btn_no_press));
-        videoImg.setImageResource(R.mipmap.ic_my_pressed_n);
-        videoTxt.setTextColor(getResources().getColor(R.color.main_text_pre));
-        infoImg.setImageResource(R.mipmap.ic_massage_normal_n);
-        infoTxt.setTextColor(getResources().getColor(R.color.main_text));
-        myImg.setImageResource(R.mipmap.ic_my_normal_n);
-        myTxt.setTextColor(getResources().getColor(R.color.main_text));
+    @Override
+    public void VideoTab() {
         String videoTag = VideoFragment.TAG;
         Fragment videoFragment = getSupportFragmentManager().findFragmentByTag(videoTag);
         if (videoFragment == null) {
@@ -137,15 +71,8 @@ public class MainActivity extends BaseActivity {
         switchContent(videoFragment, videoTag);
     }
 
-    private void onInfoClick() {
-        mainImg.setImageResource(R.mipmap.ic_home_normal_n);
-        mainTxt.setTextColor(getResources().getColor(R.color.main_btn_no_press));
-        videoImg.setImageResource(R.mipmap.ic_my_normal_n);
-        videoTxt.setTextColor(getResources().getColor(R.color.main_text));
-        infoImg.setImageResource(R.mipmap.ic_massage_pressed_n);
-        infoTxt.setTextColor(getResources().getColor(R.color.main_text_pre));
-        myImg.setImageResource(R.mipmap.ic_my_normal_n);
-        myTxt.setTextColor(getResources().getColor(R.color.main_text));
+    @Override
+    public void InfoTab() {
         String infoTag = InfoFragment.TAG;
         Fragment infoFragment = getSupportFragmentManager().findFragmentByTag(infoTag);
         if (infoFragment == null) {
@@ -154,15 +81,8 @@ public class MainActivity extends BaseActivity {
         switchContent(infoFragment, infoTag);
     }
 
-    private void onMyClick() {
-        mainImg.setImageResource(R.mipmap.ic_home_normal_n);
-        mainTxt.setTextColor(getResources().getColor(R.color.main_btn_no_press));
-        videoImg.setImageResource(R.mipmap.ic_my_normal_n);
-        videoTxt.setTextColor(getResources().getColor(R.color.main_text));
-        infoImg.setImageResource(R.mipmap.ic_massage_normal_n);
-        infoTxt.setTextColor(getResources().getColor(R.color.main_text));
-        myImg.setImageResource(R.mipmap.ic_my_pressed_n);
-        myTxt.setTextColor(getResources().getColor(R.color.main_text_pre));
+    @Override
+    public void MyTab() {
         String myTag = MyCenterFragment.TAG;
         Fragment myFragment = getSupportFragmentManager().findFragmentByTag(myTag);
         if (myFragment == null) {
