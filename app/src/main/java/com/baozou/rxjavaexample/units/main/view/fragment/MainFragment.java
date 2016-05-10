@@ -20,6 +20,7 @@ import com.baozou.rxjavaexample.R;
 import com.baozou.rxjavaexample.base.BaseFragment;
 import com.baozou.rxjavaexample.common.ACache;
 import com.baozou.rxjavaexample.common.Constants;
+import com.baozou.rxjavaexample.model.CourseBean;
 import com.baozou.rxjavaexample.model.CoursesBean;
 import com.baozou.rxjavaexample.units.main.presenter.IMainPresenter;
 import com.baozou.rxjavaexample.units.main.presenter.MainPresenter;
@@ -27,6 +28,8 @@ import com.baozou.rxjavaexample.units.main.view.MainView;
 import com.baozou.rxjavaexample.units.main.view.adapter.MainListViewAdapter;
 import com.baozou.rxjavaexample.view.MenuProviderMain;
 import com.baozou.rxjavaexample.view.topcourses.MainTopHeaderView;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -40,9 +43,6 @@ public class MainFragment extends BaseFragment implements MainView {
     public static final String TAG = MainFragment.class.getSimpleName();
     private View rootView;
     private Activity act;
-
-    //数据容器
-    private CoursesBean coursesBean = new CoursesBean();
 
     //下拉刷新view
     @Bind(R.id.swipe_container)
@@ -100,12 +100,18 @@ public class MainFragment extends BaseFragment implements MainView {
 
     @Override
     public void showMainData(CoursesBean bean) {
+        //缓存首页数据
+        mCache.put(Constants.MAIN_CACHE_KEY, bean);
         //刷新列表数据
         mAdapter.setData(bean);
         mAdapter.notifyDataSetChanged();
-        // 刷新头图
-        mHeader.headerSetData(bean.getTop_courses());
         mTimestamp = bean.getTimestamp();
+    }
+
+    @Override
+    public void showHeaderData(List<CourseBean> list) {
+        // 刷新头图
+        mHeader.headerSetData(list);
     }
 
     private void initData(){
@@ -114,8 +120,8 @@ public class MainFragment extends BaseFragment implements MainView {
 
     private void initView() {
         mCache = ACache.get(act);
-        mHeader = new MainTopHeaderView(act, coursesBean.getTop_courses());
-        mAdapter = new MainListViewAdapter(act, coursesBean);
+        mHeader = new MainTopHeaderView(act);
+        mAdapter = new MainListViewAdapter(act);
         mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
 
             @Override

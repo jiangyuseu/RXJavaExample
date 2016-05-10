@@ -27,10 +27,10 @@ public class MainPresenter implements IMainPresenter {
 
     public MainPresenter(MainView view) {
         this.view = view;
-        initRetrofit();
+        init();
     }
 
-    private void initRetrofit() {
+    private void init() {
         retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -58,13 +58,12 @@ public class MainPresenter implements IMainPresenter {
 
                     @Override
                     public void onNext(CoursesBean bean) {
-                        //缓存首页数据
-                        mCache.put(Constants.MAIN_CACHE_KEY, bean);
                         coursesBean.setData(bean.getData());
                         coursesBean.setTimestamp(bean.getTimestamp());
                         coursesBean.setTop_courses(bean.getTop_courses());
                         coursesBean.setItems(bean.getItems());
                         view.showMainData(coursesBean);
+                        view.showHeaderData(coursesBean.getTop_courses());
                     }
                 });
     }

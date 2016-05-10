@@ -42,9 +42,8 @@ public class MainTopHeaderView {
     private View mHeaderView;
     private final PagerTimerHandler mPagerTimerHandler = new PagerTimerHandler();
 
-    public MainTopHeaderView(Activity act, List<CourseBean> list){
+    public MainTopHeaderView(Activity act){
         this.act = act;
-        this.top_stories = list;
         headViewInit();
     }
 

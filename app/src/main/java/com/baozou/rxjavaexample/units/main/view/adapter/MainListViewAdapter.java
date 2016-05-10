@@ -25,15 +25,14 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 public class MainListViewAdapter extends BaseAdapter implements View.OnClickListener {
 
     private Activity mContext;
-    private CoursesBean bean;
+    private CoursesBean bean = new CoursesBean();
     private LayoutInflater mInflater;
     private DisplayImageOptions options;
     private View cateView;
     private MainCategoryAdapter categoryAdapter;
 
-    public MainListViewAdapter(Activity context, CoursesBean bean) {
+    public MainListViewAdapter(Activity context) {
         this.mContext = context;
-        this.bean = bean;
         this.mInflater = LayoutInflater.from(context);
         options = new DisplayImageOptions.Builder().displayer(new RoundedBitmapDisplayer(40)).build();
         categoryAdapter = new MainCategoryAdapter(context, bean.getItems());
