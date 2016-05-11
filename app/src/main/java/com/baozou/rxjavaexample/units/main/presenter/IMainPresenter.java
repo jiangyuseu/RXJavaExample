@@ -14,5 +14,4 @@ public interface IMainPresenter{
      * 获取缓存数据
      */
     void getMainCacheData();
-
 }

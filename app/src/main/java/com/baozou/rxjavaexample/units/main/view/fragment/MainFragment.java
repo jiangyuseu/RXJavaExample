@@ -18,14 +18,13 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baozou.rxjavaexample.R;
 import com.baozou.rxjavaexample.base.BaseFragment;
-import com.baozou.rxjavaexample.common.ACache;
-import com.baozou.rxjavaexample.common.Constants;
 import com.baozou.rxjavaexample.model.CourseBean;
 import com.baozou.rxjavaexample.model.CoursesBean;
 import com.baozou.rxjavaexample.units.main.presenter.IMainPresenter;
 import com.baozou.rxjavaexample.units.main.presenter.MainPresenter;
 import com.baozou.rxjavaexample.units.main.view.MainView;
 import com.baozou.rxjavaexample.units.main.view.adapter.MainListViewAdapter;
+import com.baozou.rxjavaexample.view.MainCategoryView;
 import com.baozou.rxjavaexample.view.MenuProviderMain;
 import com.baozou.rxjavaexample.view.topcourses.MainTopHeaderView;
 
@@ -66,6 +65,7 @@ public class MainFragment extends BaseFragment implements MainView {
     private long mTimestamp;
 
     private IMainPresenter mPresenter;
+    private MainCategoryView itemsView;
 
 
     @Nullable
@@ -87,7 +87,7 @@ public class MainFragment extends BaseFragment implements MainView {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mPresenter = new MainPresenter(this,act);
+        mPresenter = new MainPresenter(this, act);
         initView();
         initPtrViews();
         initLocation();
@@ -96,6 +96,9 @@ public class MainFragment extends BaseFragment implements MainView {
 
     @Override
     public void showMainData(CoursesBean bean) {
+        //刷新items数据
+        itemsView = new MainCategoryView(act);
+        itemsView.fillView(bean.getItems(), mListView);
         //刷新列表数据
         mAdapter.setData(bean);
         mAdapter.notifyDataSetChanged();
@@ -115,7 +118,7 @@ public class MainFragment extends BaseFragment implements MainView {
         mHeader.headerSetData(bean.getTop_courses());
     }
 
-    private void initData(){
+    private void initData() {
         mPresenter.getMainCacheData();
         mPresenter.getMainData(0);
     }
