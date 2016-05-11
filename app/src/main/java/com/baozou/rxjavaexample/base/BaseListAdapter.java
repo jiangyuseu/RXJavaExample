@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * Created by jiangyu on 2016/5/11.
- * 统一的listview adapter基类
+ * 统一的单一类型的listview adapter基类
  */
 public abstract class BaseListAdapter<E> extends BaseAdapter {
 

@@ -24,14 +24,11 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
  */
 public class MainListViewAdapter extends BaseAdapter{
 
-    private Activity mContext;
     private CoursesBean bean = new CoursesBean();
     private LayoutInflater mInflater;
     private DisplayImageOptions options;
-    private View cateView;
 
     public MainListViewAdapter(Activity context) {
-        this.mContext = context;
         this.mInflater = LayoutInflater.from(context);
         options = new DisplayImageOptions.Builder().displayer(new RoundedBitmapDisplayer(40)).build();
     }
@@ -82,7 +79,6 @@ public class MainListViewAdapter extends BaseAdapter{
                 case 1:
                     holder = new ViewHolder();
                     view = mInflater.inflate(R.layout.adapteritem_main_listview, viewGroup, false);
-                    holder.contentView = (RelativeLayout) view.findViewById(R.id.content_view);
                     holder.itemImg = (ImageView) view.findViewById(R.id.main_item_image);
                     holder.userImg = (ImageView) view.findViewById(R.id.main_item_user_img);
                     holder.userName = (TextView) view.findViewById(R.id.main_item_user_name);
@@ -122,7 +118,6 @@ public class MainListViewAdapter extends BaseAdapter{
     }
 
     private class ViewHolder {
-        private RelativeLayout contentView;
         private ImageView itemImg;
         private ImageView userImg;
         private TextView userName;

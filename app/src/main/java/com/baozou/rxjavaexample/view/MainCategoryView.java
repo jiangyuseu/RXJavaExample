@@ -2,12 +2,14 @@ package com.baozou.rxjavaexample.view;
 
 import android.app.Activity;
 import android.view.View;
-import android.widget.GridView;
 import android.widget.ListView;
+
 import com.baozou.rxjavaexample.R;
 import com.baozou.rxjavaexample.model.ItemBean;
 import com.baozou.rxjavaexample.units.main.view.adapter.MainCategoryAdapter;
+
 import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -20,16 +22,24 @@ public class MainCategoryView extends HeaderViewInterface<List<ItemBean>> {
     @Bind(R.id.main_item)
     public FixedGridView itemsView;
 
+    private View view;
+
     public MainCategoryView(Activity context) {
         super(context);
     }
 
     @Override
     protected void getView(List<ItemBean> itemBeans, ListView listView) {
-        View view = mInflate.inflate(R.layout.adapteritem_main_item, listView, false);
+        view = mInflate.inflate(R.layout.adapteritem_main_item, listView, false);
         ButterKnife.bind(this, view);
         dealWithTheView(itemBeans);
         listView.addHeaderView(view);
+    }
+
+    public void removeHeaderView(ListView listView) {
+        if (view != null) {
+            listView.removeHeaderView(view);
+        }
     }
 
     private void dealWithTheView(List<ItemBean> list) {

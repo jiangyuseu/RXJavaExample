@@ -97,7 +97,7 @@ public class MainFragment extends BaseFragment implements MainView {
     @Override
     public void showMainData(CoursesBean bean) {
         //刷新items数据
-        itemsView = new MainCategoryView(act);
+        itemsView.removeHeaderView(mListView);
         itemsView.fillView(bean.getItems(), mListView);
         //刷新列表数据
         mAdapter.setData(bean);
@@ -116,6 +116,8 @@ public class MainFragment extends BaseFragment implements MainView {
         mAdapter.setData(bean);
         mAdapter.notifyDataSetChanged();
         mHeader.headerSetData(bean.getTop_courses());
+        itemsView.removeHeaderView(mListView);
+        itemsView.fillView(bean.getItems(), mListView);
     }
 
     private void initData() {
@@ -126,6 +128,7 @@ public class MainFragment extends BaseFragment implements MainView {
     private void initView() {
         mHeader = new MainTopHeaderView(act);
         mAdapter = new MainListViewAdapter(act);
+        itemsView = new MainCategoryView(act);
         mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
 
             @Override
