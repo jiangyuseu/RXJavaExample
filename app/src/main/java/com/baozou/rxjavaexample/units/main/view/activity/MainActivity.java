@@ -10,7 +10,7 @@ import com.baozou.rxjavaexample.base.BaseActivity;
 import com.baozou.rxjavaexample.fragment.InfoFragment;
 import com.baozou.rxjavaexample.fragment.VideoFragment;
 import com.baozou.rxjavaexample.units.main.view.fragment.MainFragment;
-import com.baozou.rxjavaexample.units.user.MyCenterFragment;
+import com.baozou.rxjavaexample.units.user.view.fragment.MyCenterFragment;
 import com.baozou.rxjavaexample.view.TabFooterView;
 
 import butterknife.Bind;

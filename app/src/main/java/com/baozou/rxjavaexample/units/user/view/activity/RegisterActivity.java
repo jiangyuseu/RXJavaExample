@@ -1,5 +1,6 @@
-package com.baozou.rxjavaexample.units.user;
+package com.baozou.rxjavaexample.units.user.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -21,6 +22,7 @@ import cn.smssdk.SMSSDK;
 
 /**
  * Created by jiangyu on 2016/4/26.
+ * 验证手机号合法性
  */
 public class RegisterActivity extends BaseActivity {
 
@@ -124,10 +126,11 @@ public class RegisterActivity extends BaseActivity {
                 if (result == SMSSDK.RESULT_COMPLETE) {
                     //回调完成
                     if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
-                        Toast.makeText(RegisterActivity.this, "haha", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(RegisterActivity.this,RegisterSubmitActivity.class);
+                        intent.putExtra(RegisterSubmitActivity.PHONE_KEY,phoneNumber.getText().toString());
+                        startActivity(intent);
                         //提交验证码成功
                     } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
-
                         //获取验证码成功
                     } else if (event == SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES) {
                         //返回支持发送验证码的国家列表
@@ -139,5 +142,4 @@ public class RegisterActivity extends BaseActivity {
         };
         SMSSDK.registerEventHandler(eh); //注册短信回调
     }
-
 }

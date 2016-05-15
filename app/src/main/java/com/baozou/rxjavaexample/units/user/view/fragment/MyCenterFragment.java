@@ -1,19 +1,17 @@
-package com.baozou.rxjavaexample.units.user;
+package com.baozou.rxjavaexample.units.user.view.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.baozou.rxjavaexample.R;
-import com.baozou.rxjavaexample.base.BaseActivity;
 import com.baozou.rxjavaexample.base.BaseFragment;
+import com.baozou.rxjavaexample.units.user.LoginActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

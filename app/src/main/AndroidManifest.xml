@@ -46,7 +46,8 @@
         <activity android:name=".units.special.SpecialActivity" />
         <activity android:name=".units.video.VideosActivity" />
         <activity android:name=".units.user.LoginActivity" />
-        <activity android:name=".units.user.RegisterActivity" />
+        <activity android:name=".units.user.view.activity.RegisterActivity" />
+        <activity android:name=".units.user.view.activity.RegisterSubmitActivity" />
 
         <!--share sdk 短信验证-->
         <activity

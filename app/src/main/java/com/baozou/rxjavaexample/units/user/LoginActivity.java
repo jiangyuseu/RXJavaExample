@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 import com.baozou.rxjavaexample.R;
 import com.baozou.rxjavaexample.base.BaseActivity;
+import com.baozou.rxjavaexample.units.user.view.activity.RegisterActivity;
+import com.baozou.rxjavaexample.units.user.view.activity.RegisterSubmitActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -32,7 +34,7 @@ public class LoginActivity extends BaseActivity {
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                Intent intent = new Intent(LoginActivity.this, RegisterSubmitActivity.class);
                 startActivity(intent);
             }
         });
