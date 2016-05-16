@@ -30,6 +30,7 @@
 
         <activity
             android:name=".units.main.view.activity.MainActivity"
+            android:screenOrientation="portrait"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,17 +40,28 @@
 
         <service android:name=".base.JumpControlService" />
 
-        <activity android:name=".units.maths.MathsActivity" />
-        <activity android:name=".units.english.EnglishActivity" />
-        <activity android:name=".units.exam.ExamActivity" />
-        <activity android:name=".units.forasked.ForaskedActivity" />
-        <activity android:name=".units.politics.PoliticsActivity" />
-        <activity android:name=".units.share.ExperienceShareActivity" />
-        <activity android:name=".units.special.SpecialActivity" />
-        <activity android:name=".units.video.view.activity.VideosActivity" />
-        <activity android:name=".units.user.view.activity.LoginActivity" />
-        <activity android:name=".units.user.view.activity.RegisterActivity" />
-        <activity android:name=".units.user.view.activity.RegisterSubmitActivity" />
+        <activity android:name=".units.maths.MathsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".units.english.EnglishActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".units.exam.ExamActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".units.forasked.ForaskedActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".units.politics.PoliticsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".units.share.ExperienceShareActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".units.special.SpecialActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".units.video.view.activity.VideosActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".units.user.view.activity.LoginActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".units.user.view.activity.RegisterActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".units.user.view.activity.RegisterSubmitActivity"
+            android:screenOrientation="portrait"/>
 
         <!--share sdk 短信验证-->
         <activity
