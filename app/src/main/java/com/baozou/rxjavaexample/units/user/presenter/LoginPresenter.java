@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
+import com.baozou.rxjavaexample.base.BasePresenter;
 import com.baozou.rxjavaexample.common.Constants;
 import com.baozou.rxjavaexample.event.LoginEvent;
 import com.baozou.rxjavaexample.model.UserBean;
@@ -23,25 +24,12 @@ import rx.schedulers.Schedulers;
 /**
  * Created by jiangyu on 2016/5/16.
  */
-public class LoginPresenter implements ILoginPresenter{
-
-    private Retrofit retrofit;
-
-    private Context mContext;
+public class LoginPresenter extends BasePresenter implements ILoginPresenter{
 
     private UserBean userBean = new UserBean();
 
     public LoginPresenter(Context context) {
-        this.mContext = context;
-        init();
-    }
-
-    private void init() {
-        retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.baseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())  // retrofit <--> rxjava
-                .build();
+        super(context);
     }
 
     @Override

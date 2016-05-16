@@ -43,7 +43,6 @@ public class RegisterSubmitActivity extends BaseActivity{
         initActionBar();
         presenter = new RegisterPresenter(this);
         phone = getIntent().getStringExtra(PHONE_KEY);
-//        phone = "15151812411";
     }
 
     private void initActionBar(){

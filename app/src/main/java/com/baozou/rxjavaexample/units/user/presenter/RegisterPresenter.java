@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
+import com.baozou.rxjavaexample.base.BasePresenter;
 import com.baozou.rxjavaexample.common.Constants;
 import com.baozou.rxjavaexample.event.LoginEvent;
 import com.baozou.rxjavaexample.model.UserBean;
@@ -25,17 +26,12 @@ import rx.schedulers.Schedulers;
  * Created by lenovo on 2016/5/15.
  * 用户注册presenter
  */
-public class RegisterPresenter implements IRegisterPresenter {
-
-    private Retrofit retrofit;
-
-    private Context mContext;
+public class RegisterPresenter extends BasePresenter implements IRegisterPresenter {
 
     private UserBean userBean = new UserBean();
 
     public RegisterPresenter(Context context) {
-        this.mContext = context;
-        init();
+        super(context);
     }
 
     @Override
@@ -80,14 +76,6 @@ public class RegisterPresenter implements IRegisterPresenter {
                         }
                     }
                 });
-    }
-
-    private void init() {
-        retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.baseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())  // retrofit <--> rxjava
-                .build();
     }
 
 }

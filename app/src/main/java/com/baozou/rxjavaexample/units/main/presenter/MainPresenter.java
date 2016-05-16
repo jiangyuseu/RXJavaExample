@@ -1,6 +1,8 @@
 package com.baozou.rxjavaexample.units.main.presenter;
 
 import android.content.Context;
+
+import com.baozou.rxjavaexample.base.BasePresenter;
 import com.baozou.rxjavaexample.common.ACache;
 import com.baozou.rxjavaexample.common.Constants;
 import com.baozou.rxjavaexample.model.CoursesBean;
@@ -17,28 +19,17 @@ import rx.schedulers.Schedulers;
  * Created by jiangyu on 2016/5/10.
  * 首页Presenter
  */
-public class MainPresenter implements IMainPresenter {
+public class MainPresenter extends BasePresenter implements IMainPresenter {
 
-    private Retrofit retrofit;
     //数据容器
     private CoursesBean coursesBean = new CoursesBean();
     private ACache mCache;
     private MainView view;
-    private Context mContext;
 
     public MainPresenter(MainView view,Context context) {
+        super(context);
         this.view = view;
-        this.mContext = context;
-        init();
-    }
-
-    private void init() {
         mCache = ACache.get(mContext);
-        retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.baseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())  // retrofit <--> rxjava
-                .build();
     }
 
     @Override

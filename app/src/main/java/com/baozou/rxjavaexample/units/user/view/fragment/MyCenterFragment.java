@@ -74,8 +74,10 @@ public class MyCenterFragment extends BaseFragment{
         userAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(act, LoginActivity.class);
-                startActivity(intent);
+                if(!UserManager.getInstance(act).isUserLogin()){
+                    Intent intent = new Intent(act, LoginActivity.class);
+                    startActivity(intent);
+                }
             }
         });
     }
