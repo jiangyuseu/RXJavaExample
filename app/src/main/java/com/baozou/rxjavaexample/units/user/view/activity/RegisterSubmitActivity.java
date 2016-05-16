@@ -3,27 +3,23 @@ package com.baozou.rxjavaexample.units.user.view.activity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baozou.rxjavaexample.R;
 import com.baozou.rxjavaexample.base.BaseActivity;
-import com.baozou.rxjavaexample.model.UserBean;
 import com.baozou.rxjavaexample.units.user.presenter.IRegisterPresenter;
 import com.baozou.rxjavaexample.units.user.presenter.RegisterPresenter;
-import com.baozou.rxjavaexample.units.user.view.RegisterView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import de.greenrobot.event.EventBus;
 
 /**
  * Created by lenovo on 2016/5/15.
  * 提交注册用户信息
  */
-public class RegisterSubmitActivity extends BaseActivity implements RegisterView{
+public class RegisterSubmitActivity extends BaseActivity{
 
     public static String PHONE_KEY;
 
@@ -45,14 +41,9 @@ public class RegisterSubmitActivity extends BaseActivity implements RegisterView
         setContentView(R.layout.activity_register_submit);
         ButterKnife.bind(this);
         initActionBar();
-        presenter = new RegisterPresenter(this,this);
-//        phone = getIntent().getStringExtra(PHONE_KEY);
-        phone = "15151812411";
-    }
-
-    @Override
-    public void showUserInfo(UserBean bean) {
-
+        presenter = new RegisterPresenter(this);
+        phone = getIntent().getStringExtra(PHONE_KEY);
+//        phone = "15151812411";
     }
 
     private void initActionBar(){

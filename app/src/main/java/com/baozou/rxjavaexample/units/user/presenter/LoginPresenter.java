@@ -8,11 +8,10 @@ import com.baozou.rxjavaexample.common.Constants;
 import com.baozou.rxjavaexample.event.LoginEvent;
 import com.baozou.rxjavaexample.model.UserBean;
 import com.baozou.rxjavaexample.model.UserRequestBean;
-import com.baozou.rxjavaexample.service.RegisterUserApi;
+import com.baozou.rxjavaexample.service.LoginApi;
 import com.baozou.rxjavaexample.units.main.view.activity.MainActivity;
 import com.baozou.rxjavaexample.units.user.view.activity.RegisterSubmitActivity;
 import com.baozou.rxjavaexample.utils.UserManager;
-
 import de.greenrobot.event.EventBus;
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
@@ -22,10 +21,9 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by lenovo on 2016/5/15.
- * 用户注册presenter
+ * Created by jiangyu on 2016/5/16.
  */
-public class RegisterPresenter implements IRegisterPresenter {
+public class LoginPresenter implements ILoginPresenter{
 
     private Retrofit retrofit;
 
@@ -33,33 +31,39 @@ public class RegisterPresenter implements IRegisterPresenter {
 
     private UserBean userBean = new UserBean();
 
-    public RegisterPresenter(Context context) {
+    public LoginPresenter(Context context) {
         this.mContext = context;
         init();
     }
 
+    private void init() {
+        retrofit = new Retrofit.Builder()
+                .baseUrl(Constants.baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())  // retrofit <--> rxjava
+                .build();
+    }
+
     @Override
-    public void userRegist(String phone, String pwd) {
-        RegisterUserApi service = retrofit.create(RegisterUserApi.class);
+    public void userLogin(String phone, String pwd) {
+        LoginApi service = retrofit.create(LoginApi.class);
 
         //标准json形式的参数作为body请求封装
         UserRequestBean userRequestBean = new UserRequestBean();
         userRequestBean.setPhone(phone);
         userRequestBean.setPwd(pwd);
 
-        service.submitUserInfo(userRequestBean)
+        service.login(userRequestBean)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<UserBean>() {
                     @Override
                     public void onCompleted() {
-                        Toast.makeText(mContext, "complete!", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Toast.makeText(mContext, "error!", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -81,13 +85,4 @@ public class RegisterPresenter implements IRegisterPresenter {
                     }
                 });
     }
-
-    private void init() {
-        retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.baseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())  // retrofit <--> rxjava
-                .build();
-    }
-
 }

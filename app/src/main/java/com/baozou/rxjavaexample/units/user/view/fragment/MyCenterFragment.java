@@ -15,7 +15,7 @@ import com.baozou.rxjavaexample.R;
 import com.baozou.rxjavaexample.base.BaseFragment;
 import com.baozou.rxjavaexample.event.LoginEvent;
 import com.baozou.rxjavaexample.model.UserBean;
-import com.baozou.rxjavaexample.units.user.LoginActivity;
+import com.baozou.rxjavaexample.units.user.view.activity.LoginActivity;
 import com.baozou.rxjavaexample.utils.GeneralTools;
 import com.baozou.rxjavaexample.utils.UserManager;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
