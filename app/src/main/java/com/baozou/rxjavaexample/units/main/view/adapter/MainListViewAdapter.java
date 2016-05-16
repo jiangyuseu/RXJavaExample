@@ -90,7 +90,7 @@ public class MainListViewAdapter extends BaseAdapter{
             }
         } else {
             switch (type) {
-                case 0:
+                case 1:
                     holder = (ViewHolder) view.getTag();
                     break;
             }
@@ -99,8 +99,8 @@ public class MainListViewAdapter extends BaseAdapter{
 
         if (type == 1) {
             CourseBean mBean = null;
-            if (i > 1) {
-                mBean = bean.getData().get(i - 2);
+            if (i > 0) {
+                mBean = bean.getData().get(i - 1);
             }
             try {
                 ImageLoader.getInstance().displayImage(mBean.getImage(), holder.itemImg);

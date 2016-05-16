@@ -1,6 +1,5 @@
 package com.baozou.rxjavaexample.units.user.view;
 
-import com.baozou.rxjavaexample.model.CoursesBean;
 import com.baozou.rxjavaexample.model.UserBean;
 
 /**
