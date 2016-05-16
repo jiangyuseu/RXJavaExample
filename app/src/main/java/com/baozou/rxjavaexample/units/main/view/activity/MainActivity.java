@@ -8,13 +8,14 @@ import android.support.v4.app.FragmentTransaction;
 import com.baozou.rxjavaexample.R;
 import com.baozou.rxjavaexample.base.BaseActivity;
 import com.baozou.rxjavaexample.fragment.InfoFragment;
-import com.baozou.rxjavaexample.fragment.VideoFragment;
+import com.baozou.rxjavaexample.units.video.view.fragment.VideoFragment;
 import com.baozou.rxjavaexample.units.main.view.fragment.MainFragment;
 import com.baozou.rxjavaexample.units.user.view.fragment.MyCenterFragment;
 import com.baozou.rxjavaexample.view.TabFooterView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by jiangyu on 2016/3/28.
@@ -45,6 +46,17 @@ public class MainActivity extends BaseActivity implements TabFooterView.TabClick
             tr.commitAllowingStateLoss();
         }
 
+        //根据特定标识跳转fragment
+        int flag = getIntent().getIntExtra("fragment_flag", -1);
+        if(flag == 1){
+            footer.onMyClick();
+        }
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     @Override

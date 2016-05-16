@@ -5,16 +5,44 @@ package com.baozou.rxjavaexample.model;
  * 用户信息
  */
 public class UserBean {
-    private String username = "";
+    private String name = "";
+    private String nickName = "";
+    private String phone = "";
     private String avatar = "";
     private String token = "";
+    private String uid = "";
 
-    public String getUsername() {
-        return username;
+
+    public String getUid() {
+        return uid;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getAvatar() {

@@ -1,4 +1,4 @@
-package com.baozou.rxjavaexample.fragment;
+package com.baozou.rxjavaexample.units.video.view.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -21,7 +21,7 @@ import cn.smssdk.gui.RegisterPage;
 
 /**
  * Created by jiangyu on 2016/3/28.
- * 圈子Fragment
+ * Video Fragment
  */
 public class VideoFragment extends BaseFragment {
 
@@ -29,13 +29,12 @@ public class VideoFragment extends BaseFragment {
     private View rootView;
     private Activity act;
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (rootView == null) {
             act = getActivity();
-            rootView = inflater.inflate(R.layout.fragment_quanzi, container, false);
+            rootView = inflater.inflate(R.layout.fragment_video, container, false);
             ButterKnife.bind(this, rootView);
         } else {
             if (rootView.getParent() != null) {
@@ -50,25 +49,6 @@ public class VideoFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
     }
 
-    @OnClick(R.id.test)
-    void test() {
-        //打开注册页面
-        RegisterPage registerPage = new RegisterPage();
-        registerPage.setRegisterCallback(new EventHandler() {
-            public void afterEvent(int event, int result, Object data) {
-                // 解析注册结果
-                if (result == SMSSDK.RESULT_COMPLETE) {
-                    @SuppressWarnings("unchecked")
-                    HashMap<String, Object> phoneMap = (HashMap<String, Object>) data;
-                    String country = (String) phoneMap.get("country");
-                    String phone = (String) phoneMap.get("phone");
-                    // 提交用户信息
-                    Log.i("haha", "country:" + country + ",phone:" + phone);
-//                    registerUser(country, phone);
-                }
-            }
-        });
-        registerPage.show(act);
-    }
+
 
 }

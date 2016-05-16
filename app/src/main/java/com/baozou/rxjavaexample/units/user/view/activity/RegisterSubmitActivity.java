@@ -17,6 +17,7 @@ import com.baozou.rxjavaexample.units.user.view.RegisterView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by lenovo on 2016/5/15.
@@ -45,7 +46,8 @@ public class RegisterSubmitActivity extends BaseActivity implements RegisterView
         ButterKnife.bind(this);
         initActionBar();
         presenter = new RegisterPresenter(this,this);
-        phone = getIntent().getStringExtra(PHONE_KEY);
+//        phone = getIntent().getStringExtra(PHONE_KEY);
+        phone = "15151812411";
     }
 
     @Override

@@ -1,9 +1,10 @@
 package com.baozou.rxjavaexample.service;
 
 import com.baozou.rxjavaexample.model.UserBean;
+import com.baozou.rxjavaexample.model.UserRequestBean;
 
+import retrofit.http.Body;
 import retrofit.http.POST;
-import retrofit.http.Query;
 import rx.Observable;
 
 /**
@@ -12,6 +13,6 @@ import rx.Observable;
  */
 public interface RegisterUserApi {
     @POST("teaching/user/base/_reg")
-    Observable<UserBean> submitUserInfo(@Query("phone") String phone, @Query("pwd") String pwd);
+    Observable<UserBean> submitUserInfo(@Body UserRequestBean user);
 }
 

@@ -1,4 +1,4 @@
-package com.baozou.rxjavaexample.units.video;
+package com.baozou.rxjavaexample.units.video.view.activity;
 
 import android.app.Activity;
 import android.os.Bundle;

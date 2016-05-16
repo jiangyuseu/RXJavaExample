@@ -12,7 +12,7 @@ import com.baozou.rxjavaexample.units.maths.MathsActivity;
 import com.baozou.rxjavaexample.units.politics.PoliticsActivity;
 import com.baozou.rxjavaexample.units.share.ExperienceShareActivity;
 import com.baozou.rxjavaexample.units.special.SpecialActivity;
-import com.baozou.rxjavaexample.units.video.VideosActivity;
+import com.baozou.rxjavaexample.units.video.view.activity.VideosActivity;
 
 /**
  * Created by lenovo on 2016/4/19.
